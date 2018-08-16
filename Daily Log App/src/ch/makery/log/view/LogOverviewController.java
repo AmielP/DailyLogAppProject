@@ -51,15 +51,17 @@ public class LogOverviewController
 
 	private IMatchContent match = new MatchLogContent();
 
-	private IFindMostRecentFileOrFolder findMostRecentTextFile = new FindMostRecentTextFile();
+	private IFindMostRecentFileOrFolder findMostRecentTextFile;
 	
+	//hard-coded path. may change later.
 	private String dailyLogPathDirectoryOfAmiel = "D:/Documents (D)/Daily Log";
 	
+	//hard-coded path. may change later
 	private String dailyLogPathDirectoryOfBCT = "C:";
 
-	private String dailyLogPathOfAmiel = findMostRecentTextFile.findMostRecentFileOrFolder(dailyLogPathDirectoryOfAmiel);
+	private String dailyLogPathOfAmiel;
 
-	private String dailyLogPathOfBCT = findMostRecentTextFile.findMostRecentFileOrFolder(dailyLogPathDirectoryOfBCT);
+	private String dailyLogPathOfBCT;
 	
 	private File fileOrFolderOfAmiel = new File(dailyLogPathDirectoryOfAmiel);
 	
@@ -123,6 +125,8 @@ public class LogOverviewController
 	@FXML
 	private void initialize()
 	{
+		findMostRecentTextFile = new FindMostRecentTextFile();
+		
 		activatePaneOnDefaultRun(nameTextField);
 
 		wrapTextArea(entryTextArea);
@@ -130,13 +134,15 @@ public class LogOverviewController
 		nameTextField.appendText("Amiel");
 		showLogDetails();
 
+//		System.out.println("Before the storm");
 		if(!fileOrFolderOfAmiel.exists())
 		{
+			dailyLogPathOfBCT = findMostRecentTextFile.findMostRecentFileOrFolder(dailyLogPathDirectoryOfBCT);
 			readTextFile(dailyLogPathOfBCT);
 		}
 		else
 		{
-			System.out.println(dailyLogPathOfAmiel);
+			dailyLogPathOfAmiel = findMostRecentTextFile.findMostRecentFileOrFolder(dailyLogPathDirectoryOfAmiel);
 			readTextFile(dailyLogPathOfAmiel);
 		}
 	}
