@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.log.view.LogOverviewController">
+   <children>
+      <BorderPane layoutX="192.0" layoutY="140.0" prefHeight="480.0" prefWidth="720.0" style="-fx-border-color: orange;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="72.0" prefWidth="720.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TextField fx:id="nameTextField" layoutX="-11.0" prefHeight="31.0" prefWidth="716.0" promptText="Name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TextField fx:id="subjectTextField" layoutY="2.0" prefHeight="31.0" prefWidth="716.0" promptText="Subject" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </top>
+         <center>
+            <TextArea fx:id="entryTextArea" prefHeight="200.0" prefWidth="200.0" promptText="What's On Your Mind?" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font></TextArea>
+         </center>
+         <bottom>
+            <BorderPane prefHeight="51.0" prefWidth="720.0" style="-fx-background-color: pink;" BorderPane.alignment="CENTER">
+               <left>
+                  <Button mnemonicParsing="false" onAction="#handleSendLog" text="Send" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="10.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="Pixel Digivolve Italic" size="15.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Save log to a local file system" />
+                     </tooltip>
+                  </Button>
+               </left>
+               <right>
+                  <Button mnemonicParsing="false" onAction="#handleCancelLog" text="Cancel" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="10.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="Pixel Digivolve Italic" size="15.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Exit the application" />
+                     </tooltip>
+                  </Button>
+               </right>
+               <center>
+                  <Button mnemonicParsing="false" onAction="#handleDeleteLog" text="Clear" BorderPane.alignment="CENTER_RIGHT">
+                     <BorderPane.margin>
+                        <Insets right="10.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="Pixel Digivolve Italic" size="15.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Remove all contents from log" />
+                     </tooltip>
+                  </Button>
+               </center>
+               <top>
+                  <Label fx:id="dateLabel" text="Label" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Times New Roman" size="18.0" />
+                     </font>
+                  </Label>
+               </top>
+            </BorderPane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
