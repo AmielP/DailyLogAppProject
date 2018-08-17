@@ -22,7 +22,7 @@ import ch.makery.log.services.IFindMostRecentFileOrFolder;
 import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
 import ch.makery.log.util.DateUtil;
-import ch.makery.log.util.FindMostRecentTextFile;
+import ch.makery.log.util.FindMostRecentFile;
 import ch.makery.log.util.MatchLogContent;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -58,6 +58,8 @@ public class LogOverviewController
 	
 	//hard-coded path. may change later
 	private String dailyLogPathDirectoryOfBCT = "C:";
+	
+	private String fileExtension = ".txt";
 
 	private String dailyLogPathOfAmiel;
 
@@ -122,10 +124,12 @@ public class LogOverviewController
 
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
+	//or if user has entered data to an existing text file; upon which,
+	//Name, Subject, and Entry fields are appended with pre-existing data
 	@FXML
 	private void initialize()
 	{
-		findMostRecentTextFile = new FindMostRecentTextFile();
+		findMostRecentTextFile = new FindMostRecentFile();
 		
 		activatePaneOnDefaultRun(nameTextField);
 
