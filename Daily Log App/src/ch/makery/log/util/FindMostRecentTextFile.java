@@ -1,19 +1,17 @@
 package ch.makery.log.util;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Optional;
+import ch.makery.log.services.FindMostRecentFile;
 
-import ch.makery.log.services.FindMostRecentFolder;
-
-public class FindMostRecentUnzippedFolder extends FindMostRecentFolder
+public class FindMostRecentTextFile extends FindMostRecentFile
 {	
-	public FindMostRecentUnzippedFolder(String folderPath)
+	private String textFileExtensionType = ".txt";
+	
+	public FindMostRecentTextFile(String filePath)
 	{
-		setSearchFileOrFolder(new SearchSpecificFolder());
-		getSearchFileOrFolder().findFileOrFolder(folderPath, null);
+//		System.out.println("File path is " + filePath + textFileExtensionType);
+		setSearchFileOrFolder(new SearchSpecificFile());
+		getSearchFileOrFolder().findFileOrFolder(filePath, textFileExtensionType);
+//		System.out.println("Results mister: " + getSearchFileOrFolder().findFileOrFolder(filePath, textFileExtensionType));
 	}
 	
 //	@Override

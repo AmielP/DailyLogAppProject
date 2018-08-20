@@ -1,20 +1,39 @@
 package ch.makery.log.services;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Optional;
-
-public abstract class FindMostRecentFile implements ISearchFileOrFolder
+public abstract class FindMostRecentFile implements IFindMostRecentFileOrFolderTemplate
 {	
-	private IFindExtension fileExtension;
+	private ISearchFileOrDirectory searchFile;
+	private IFileOrDirectory file;
 	
-	private ISearchFileOrFolder searchFileOrFolder;
+	@Override
+	public void setSearchFileOrFolder(ISearchFileOrDirectory searchFile)
+	{
+		this.searchFile = searchFile;
+	}
 	
-	private Optional<File> mostRecentFileOrFolder;
+	@Override
+	public ISearchFileOrDirectory getSearchFileOrFolder()
+	{
+		return searchFile;
+	}
 	
-	private Path parentFolder;
+	@Override
+	public void setFileOrFolder(IFileOrDirectory file)
+	{
+		this.file = file;
+	}
+	
+	@Override
+	public IFileOrDirectory getFileOrFolder()
+	{
+		return file;
+	}
+	
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	private Optional<File> mostRecentFileOrFolder;
+
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	private Path parentFolder;
 	
 //	@Override
 //	public String findMostRecentFile(String textFilePath)
@@ -41,36 +60,41 @@ public abstract class FindMostRecentFile implements ISearchFileOrFolder
 //		return null;
 //	}
 	
-	public void setSearchFileOrFolder(ISearchFileOrFolder searchFileOrFolder)
-	{
-		this.searchFileOrFolder = searchFileOrFolder;
-	}
+//	public void setSearchFileOrFolder(ISearchFileOrDirectory searchFileOrDirectory)
+//	{
+//		this.searchFileOrDirectory = searchFileOrDirectory;
+//	}
 	
-	public void setMostRecentFileOrFolder(Optional<File> mostRecentFileOrFolder)
-	{
-		this.mostRecentFileOrFolder = mostRecentFileOrFolder;
-	}
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	public void setMostRecentFileOrFolder(Optional<File> mostRecentFileOrFolder)
+//	{
+//		this.mostRecentFileOrFolder = mostRecentFileOrFolder;
+//	}
 	
-	public Optional<File> getMostRecentFileOrFolder()
-	{
-		return mostRecentFileOrFolder;
-	}
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	public Optional<File> getMostRecentFileOrFolder()
+//	{
+//		return mostRecentFileOrFolder;
+//	}
 	
-	public void setFindTextFileExtension(IFindExtension fileExtension)
-	{
-		this.fileExtension = fileExtension;
-	}
+//	public void setFindTextFileExtension(IFindExtension fileExtension)
+//	{
+//		this.fileExtension = fileExtension;
+//	}
 	
-	public void setParentFolder(Path parentFolder)
-	{
-		this.parentFolder = parentFolder;
-	}
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	public void setParentFolder(Path parentFolder)
+//	{
+//		this.parentFolder = parentFolder;
+//	}
 	
-	public Path getParentFolder()
-	{
-		return parentFolder;
-	}
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	public Path getParentFolder()
+//	{
+//		return parentFolder;
+//	}
 
-	@Override
-	public abstract String findFileOrFolder(String path, String extension);
+	//Migrate this into the SearchSpecificFileOrFolder class
+//	@Override
+//	public abstract String findFileOrFolder(String path, String extension);
 }
