@@ -13,7 +13,12 @@ public class FindMostRecentUnzippedFolder extends FindMostRecentFolder
 	public FindMostRecentUnzippedFolder(String folderPath)
 	{
 		setSearchFileOrFolder(new SearchSpecificFolder());
-		getSearchFileOrFolder().findFileOrFolder(folderPath, null);
+	}
+	
+	@Override
+	public String targetFileOrFolderName(String folderPath)
+	{
+		return getSearchFileOrFolder().findFileOrFolder(folderPath, null);
 	}
 	
 //	@Override

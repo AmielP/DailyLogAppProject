@@ -6,12 +6,15 @@ public class FindMostRecentTextFile extends FindMostRecentFile
 {	
 	private String textFileExtensionType = ".txt";
 	
-	public FindMostRecentTextFile(String filePath)
+	public FindMostRecentTextFile()
 	{
-//		System.out.println("File path is " + filePath + textFileExtensionType);
 		setSearchFileOrFolder(new SearchSpecificFile());
-		getSearchFileOrFolder().findFileOrFolder(filePath, textFileExtensionType);
-//		System.out.println("Results mister: " + getSearchFileOrFolder().findFileOrFolder(filePath, textFileExtensionType));
+	}
+	
+	@Override
+	public String targetFileOrFolderName(String filePath)
+	{
+		return getSearchFileOrFolder().findFileOrFolder(filePath, textFileExtensionType);
 	}
 	
 //	@Override

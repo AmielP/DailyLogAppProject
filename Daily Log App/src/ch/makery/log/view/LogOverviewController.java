@@ -53,21 +53,24 @@ public class LogOverviewController
 	private IMatchContent match = new MatchLogContent();
 
 	private FindMostRecentFile mostRecentTextFile;
-	
+
 	//hard-coded path. may change later.
 	private String dailyLogPathDirectoryOfAmiel = "D:/Documents (D)/Daily Log";
-	
+
 	//hard-coded path. may change later
-	private String dailyLogPathDirectoryOfBCT = "C:";
-	
-	private String dailyLogPathTest = "D:/TestDailyLog";
+	private String dailyLogPathDirectoryOfBCT = "C:Bryce";
 
-	private String dailyLogPathOfAmiel;
+	//hard-coded path. may change later
+	private String dailyLogPathDirectoryOfTest = "D:/TestDailyLog";
 
-	private String dailyLogPathOfBCT;
+	private String dailyLogFileOfAmiel;
+
+	private String dailyLogFileOfBCT;
 	
+	private String dailyLogFileOfTest;
+
 	private File fileOrFolderOfAmiel = new File(dailyLogPathDirectoryOfAmiel);
-	
+
 	private File fileOrFolderOfBCT = new File(dailyLogPathDirectoryOfBCT);
 
 	//	private String newLine = System.getProperty("line.separator");
@@ -92,14 +95,14 @@ public class LogOverviewController
 	{		
 		try
 		{
-			byte[] buffer = new byte[1000];
+			byte[] buffer = new byte[100000];
 
 			FileInputStream inputStream = new FileInputStream(selectUserPath);
 
 			int nRead = 0;
 
 			while((nRead = inputStream.read(buffer)) != -1){}
-
+			
 			//put match here
 			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
 			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
@@ -122,21 +125,28 @@ public class LogOverviewController
 		DateUtil.updateTime(dateLabel, DateUtil.getDatePattern(), DateUtil.getDateFormatter());
 		DateUtil.displayTimer();
 	}
-	
+
 	private void determineExistingPath()
 	{
-		if(!fileOrFolderOfAmiel.exists())
+		mostRecentTextFile = new FindMostRecentTextFile();
+		
+		if(!fileOrFolderOfAmiel.exists() && fileOrFolderOfBCT.exists())
 		{
-			mostRecentTextFile = new FindMostRecentTextFile(dailyLogPathTest);
-			
-//			dailyLogPathOfBCT = findMostRecentTextFile.findFileOrFolder(dailyLogPathDirectoryOfBCT, fileExtension);
-			readTextFile(dailyLogPathTest);
+			System.out.println("BCT's stuff");
+			dailyLogFileOfBCT = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfBCT);
+			readTextFile(dailyLogFileOfBCT);
 		}
-		else
+		else if(!fileOrFolderOfBCT.exists() && fileOrFolderOfAmiel.exists())
 		{
-			mostRecentTextFile = new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel);
-//			dailyLogPathOfAmiel = findMostRecentTextFile.findFileOrFolder(dailyLogPathDirectoryOfAmiel, fileExtension);
-			readTextFile(dailyLogPathOfAmiel);
+			System.out.println("Amiel's stuff");
+			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
+			readTextFile(dailyLogFileOfAmiel);
+		}
+		else if(!fileOrFolderOfBCT.exists() && !fileOrFolderOfAmiel.exists())
+		{
+			System.out.println("The other guy's stuff");
+			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest);
+			readTextFile(dailyLogFileOfTest);
 		}
 	}
 
@@ -147,11 +157,11 @@ public class LogOverviewController
 	@FXML
 	private void initialize()
 	{
-//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
-		
+		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
+
 		//Do Something with this
-//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
-		
+		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
+
 		activatePaneOnDefaultRun(nameTextField);
 
 		wrapTextArea(entryTextArea);
@@ -160,8 +170,8 @@ public class LogOverviewController
 		showLogDetails();
 
 		determineExistingPath();
-//		System.out.println("Before the storm");
-		
+		//		System.out.println("Before the storm");
+
 	}
 
 	public void setMainApp(MainApp mainApp)

@@ -49,7 +49,7 @@ public class SearchSpecificFileOrFolder implements IFileOrDirectory// extends Fi
 	
 	public void defineMostRecentFile(String filePath, String extension)
 	{	
-//		parentFolder = Paths.get(filePath);
+		parentFolder = Paths.get(filePath);
 		
 		mostRecentFileOrFolder = Arrays
 				.stream(parentFolder.toFile().listFiles())

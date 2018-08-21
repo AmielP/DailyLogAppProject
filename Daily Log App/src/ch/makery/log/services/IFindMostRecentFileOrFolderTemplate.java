@@ -7,5 +7,5 @@ public interface IFindMostRecentFileOrFolderTemplate
 	ISearchFileOrDirectory getSearchFileOrFolder();
 	void setFileOrFolder(IFileOrDirectory fileOrFolder);
 	IFileOrDirectory getFileOrFolder();
-//	IFindMostRecentFileOrFolderTemplate getTest();
+	String targetFileOrFolderName(String fileOrFolderPath);
 }

@@ -4,19 +4,6 @@ public abstract class FindMostRecentFolder implements IFindMostRecentFileOrFolde
 {
 	private ISearchFileOrDirectory searchFolder;
 	private IFileOrDirectory folder;
-//	private IFindMostRecentFileOrFolderTemplate test;
-	
-//	@Override
-//	public void setTest(IFindMostRecentFileOrFolderTemplate test)
-//	{
-//		this.test = test;
-//	}
-//	
-//	@Override
-//	public IFindMostRecentFileOrFolderTemplate getTest()
-//	{
-//		return test;
-//	}
 	
 	@Override
 	public void setSearchFileOrFolder(ISearchFileOrDirectory searchFolder)
@@ -41,7 +28,7 @@ public abstract class FindMostRecentFolder implements IFindMostRecentFileOrFolde
 	{
 		return folder;
 	}
-	
-	//May delete this later on
-//	public abstract void test(String folderPath);
+
+	@Override
+	public abstract String targetFileOrFolderName(String folderPath);
 }
