@@ -20,6 +20,7 @@ import ch.makery.log.MainApp;
 import ch.makery.log.model.Log;
 import ch.makery.log.services.ISearchFileOrDirectory;
 import ch.makery.log.services.FindMostRecentFile;
+import ch.makery.log.services.IAlert;
 import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
 import ch.makery.log.util.DateUtil;
@@ -76,6 +77,8 @@ public class LogOverviewController
 	private File fileOrFolderOfAmiel = new File(dailyLogPathDirectoryOfAmiel);
 
 	private File fileOrFolderOfBCT = new File(dailyLogPathDirectoryOfBCT);
+	
+	private IAlert alert;
 
 	//	private String newLine = System.getProperty("line.separator");
 
@@ -122,6 +125,16 @@ public class LogOverviewController
 		{
 			System.out.println("ERROR: Unable to read file, " + selectUserPath);
 		}
+	}
+	
+	private void wrapTextArea(TextArea textArea)
+	{
+		textArea.setWrapText(true);
+	}
+
+	private void printLogDummy()
+	{
+		System.out.println(log.getName() + "\n" + log.getDate() + "\n" + log.getSubject() + "\n" + log.getEntry());
 	}
 
 	private void showLogDetails()
@@ -197,32 +210,22 @@ public class LogOverviewController
 		Platform.exit();
 	}
 
-	private void wrapTextArea(TextArea textArea)
-	{
-		textArea.setWrapText(true);
-	}
-
-	private void printLogDummy()
-	{
-		System.out.println(log.getName() + "\n" + log.getDate() + "\n" + log.getSubject() + "\n" + log.getEntry());
-	}
-
 	@FXML
 	private void handleSendLog()
 	{
+		String title = "Warning";
+		
+		String headerText = "Attempting to access non-existent path: " + dailyLogPathDirectoryOfAmiel;
+		
+		String contentText = "Please send to an existing directory";
+		
 		//		DateUtil.updateTime(dateLabel);
 		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
 		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
 		printLogDummy();
 		if(!fileOrFolderOfAmiel.exists())
 		{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Directory: " + dailyLogPathDirectoryOfAmiel + " does not exist!");
-			alert.setHeaderText("Test");
-			alert.setContentText("Please try again");
-
-			alert.showAndWait();
+			alert.runAlertMessage(mainApp, title, headerText, contentText);
 		}
 		else
 		{
