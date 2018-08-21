@@ -14,8 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MainApp extends Application 
@@ -24,7 +22,6 @@ public class MainApp extends Application
 	private BorderPane rootLayout;
 	private Label dateLabel = new Label("message1");
 	private ObservableList<Log> logData = FXCollections.observableArrayList();
-	private Text text = new Text();
 	
 	public MainApp()
 	{
@@ -45,7 +42,6 @@ public class MainApp extends Application
 	{
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Daily Log App");
-		text.setFont(Font.loadFont("file:resources/fonts/PIXEL DIGIVOLVE.OTF", 120));
 		
 		initRootLayout();
 		

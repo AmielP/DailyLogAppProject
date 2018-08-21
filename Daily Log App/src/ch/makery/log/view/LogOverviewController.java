@@ -28,6 +28,10 @@ import ch.makery.log.util.MatchLogContent;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+//Need to update Java SDK
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+//Need to update Java SDK
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -66,7 +70,7 @@ public class LogOverviewController
 	private String dailyLogFileOfAmiel;
 
 	private String dailyLogFileOfBCT;
-	
+
 	private String dailyLogFileOfTest;
 
 	private File fileOrFolderOfAmiel = new File(dailyLogPathDirectoryOfAmiel);
@@ -102,7 +106,7 @@ public class LogOverviewController
 			int nRead = 0;
 
 			while((nRead = inputStream.read(buffer)) != -1){}
-			
+
 			//put match here
 			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
 			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
@@ -129,7 +133,7 @@ public class LogOverviewController
 	private void determineExistingPath()
 	{
 		mostRecentTextFile = new FindMostRecentTextFile();
-		
+
 		if(!fileOrFolderOfAmiel.exists() && fileOrFolderOfBCT.exists())
 		{
 			System.out.println("BCT's stuff");
@@ -210,16 +214,29 @@ public class LogOverviewController
 		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
 		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
 		printLogDummy();
-		File file = new File("D:/Documents (D)/Daily Log/Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()) + ".txt");
-		try
+		if(!fileOrFolderOfAmiel.exists())
 		{
-			file.createNewFile();
-			Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
-			//			printToConsole.print(file);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Directory: " + dailyLogPathDirectoryOfAmiel + " does not exist!");
+			alert.setHeaderText("Test");
+			alert.setContentText("Please try again");
+
+			alert.showAndWait();
 		}
-		catch(IOException e)
+		else
 		{
-			e.printStackTrace();
+			File file = new File("D:/Documents (D)/Daily Log/Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()) + ".txt");
+			try
+			{
+				file.createNewFile();
+				Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
+				//			printToConsole.print(file);
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
