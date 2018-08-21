@@ -41,41 +41,11 @@ public class MainApp extends Application
 	public void start(Stage primaryStage) 
 	{
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("DailyLogApp");
+		this.primaryStage.setTitle("Daily Log App");
 		
 		initRootLayout();
 		
 		showLogOverview();
-		
-//		Task <Void> task = new Task<Void>()
-//		{
-//			@Override public Void call() throws InterruptedException
-//			{
-//				updateMessage("Hi");
-//				
-//				Thread.sleep(2000);
-//				
-//				updateMessage("hello");
-//				
-//				Thread.sleep(5000);
-//				
-//				return null;
-//			}
-//		};
-//dateLabel.textProperty().bind(task.messageProperty());
-//task.setOnSucceeded(e ->
-//{
-//	dateLabel.textProperty().unbind();
-//	
-//	dateLabel.setText("Today is ");
-//});
-//
-//Thread thread = new Thread(task);
-//thread.setDaemon(true);
-//thread.start();
-//
-//primaryStage.setScene(new Scene(dateLabel));
-//primaryStage.show();
 	}
 	
 	//Initialize the root layout
