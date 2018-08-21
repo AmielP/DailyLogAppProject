@@ -23,6 +23,7 @@ import ch.makery.log.services.FindMostRecentFile;
 import ch.makery.log.services.IAlert;
 import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
+import ch.makery.log.util.AlertUtil;
 import ch.makery.log.util.DateUtil;
 import ch.makery.log.util.FindMostRecentTextFile;
 import ch.makery.log.util.MatchLogContent;
@@ -225,7 +226,8 @@ public class LogOverviewController
 		printLogDummy();
 		if(!fileOrFolderOfAmiel.exists())
 		{
-			alert.runAlertMessage(mainApp, title, headerText, contentText);
+			alert = new AlertUtil();
+			alert.runAlertMessage(new Alert(AlertType.WARNING), mainApp, title, headerText, contentText);
 		}
 		else
 		{
