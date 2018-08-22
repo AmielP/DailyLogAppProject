@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.model.Log;
+import ch.makery.log.model.LogOverviewTemplate;
 import ch.makery.log.services.ISearchFileOrDirectory;
 import ch.makery.log.services.FindMostRecentFile;
 import ch.makery.log.services.IAlert;
@@ -27,6 +28,7 @@ import ch.makery.log.util.AlertUtil;
 import ch.makery.log.util.DateUtil;
 import ch.makery.log.util.FindMostRecentTextFile;
 import ch.makery.log.util.MatchLogContent;
+import ch.makery.log.util.ReadTextFileUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -39,7 +41,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class LogOverviewController 
+public class LogOverviewController
 {
 	@FXML
 	private TextField nameTextField;
@@ -80,12 +82,14 @@ public class LogOverviewController
 	private File fileOrFolderOfBCT = new File(dailyLogPathDirectoryOfBCT);
 	
 	private IAlert alert;
+	
+	private LogOverviewTemplate readTextFileUtil = new ReadTextFileUtil();
 
 	//	private String newLine = System.getProperty("line.separator");
 
 	public LogOverviewController()
 	{
-
+		//default buffer size is 100000;
 	}
 
 	private void activatePaneOnDefaultRun(Object pane)
@@ -99,33 +103,41 @@ public class LogOverviewController
 		});
 	}
 
-	private void readTextFile(String selectUserPath)
-	{		
-		try
-		{
-			byte[] buffer = new byte[100000];
-
-			FileInputStream inputStream = new FileInputStream(selectUserPath);
-
-			int nRead = 0;
-
-			while((nRead = inputStream.read(buffer)) != -1){}
-
-			//put match here
-			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-			entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
-
-			inputStream.close();
-		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("ERROR: Unable to open file, " + selectUserPath);
-		}
-		catch(IOException e)
-		{
-			System.out.println("ERROR: Unable to read file, " + selectUserPath);
-		}
+	//Delete this whenever possible
+//	private void readTextFile(String selectUserPath)
+//	{		
+//		try
+//		{
+//			byte[] buffer = new byte[100000];
+//
+//			FileInputStream inputStream = new FileInputStream(selectUserPath);
+//
+//			int nRead = 0;
+//
+//			while((nRead = inputStream.read(buffer)) != -1){}
+//
+//			//put match here
+//			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
+//			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
+//			entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
+//
+//			inputStream.close();
+//		}
+//		catch(FileNotFoundException e)
+//		{
+//			System.out.println("ERROR: Unable to open file, " + selectUserPath);
+//		}
+//		catch(IOException e)
+//		{
+//			System.out.println("ERROR: Unable to read file, " + selectUserPath);
+//		}
+//	}
+	
+	private void setEachTextBoxWithContent(byte[] buffer)
+	{
+		nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
+		subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
+		entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
 	}
 	
 	private void wrapTextArea(TextArea textArea)
@@ -147,24 +159,30 @@ public class LogOverviewController
 	private void determineExistingPath()
 	{
 		mostRecentTextFile = new FindMostRecentTextFile();
+//		readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 
 		if(!fileOrFolderOfAmiel.exists() && fileOrFolderOfBCT.exists())
 		{
 			System.out.println("BCT's stuff");
 			dailyLogFileOfBCT = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfBCT);
-			readTextFile(dailyLogFileOfBCT);
+			readTextFileUtil.readTextFile(dailyLogFileOfBCT);
+			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
 		else if(!fileOrFolderOfBCT.exists() && fileOrFolderOfAmiel.exists())
 		{
+			readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 			System.out.println("Amiel's stuff");
 			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
-			readTextFile(dailyLogFileOfAmiel);
+			readTextFileUtil.readTextFile(dailyLogFileOfAmiel);
+			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
+			System.out.println(new String (readTextFileUtil.getSourceFile().getBuffer()).length());
 		}
 		else if(!fileOrFolderOfBCT.exists() && !fileOrFolderOfAmiel.exists())
 		{
 			System.out.println("The other guy's stuff");
 			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest);
-			readTextFile(dailyLogFileOfTest);
+			readTextFileUtil.readTextFile(dailyLogFileOfTest);
+			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
 	}
 
