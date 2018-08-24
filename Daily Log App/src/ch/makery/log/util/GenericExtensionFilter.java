@@ -14,6 +14,8 @@ public class GenericExtensionFilter implements IGenericExtensionFilter, Filename
 		this.extension = extension;
 	}
 	
+	//add a prefix log filter
+	
 	@Override
 	public boolean accept(File directory, String name)
 	{

@@ -3,15 +3,13 @@ package ch.makery.log;
 import java.io.IOException;
 
 import ch.makery.log.model.Log;
-import ch.makery.log.util.DateUtil;
 import ch.makery.log.view.LogOverviewController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+//import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -20,7 +18,7 @@ public class MainApp extends Application
 {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private Label dateLabel = new Label("message1");
+//	private Label dateLabel = new Label("message1");
 	private ObservableList<Log> logData = FXCollections.observableArrayList();
 	
 	public MainApp()
@@ -79,7 +77,7 @@ public class MainApp extends Application
 			rootLayout.setCenter(logOverview);
 			
 			LogOverviewController controller = loader.getController();
-			controller.setMainApp(this);;
+			controller.setMainApp(this);
 		}
 		catch(IOException e)
 		{

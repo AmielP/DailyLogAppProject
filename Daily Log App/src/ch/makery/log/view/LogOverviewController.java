@@ -170,8 +170,8 @@ public class LogOverviewController
 		}
 		else if(!fileOrFolderOfBCT.exists() && fileOrFolderOfAmiel.exists())
 		{
-			readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 			System.out.println("Amiel's stuff");
+			readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
 			readTextFileUtil.readTextFile(dailyLogFileOfAmiel);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
