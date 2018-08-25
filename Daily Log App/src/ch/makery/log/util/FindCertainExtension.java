@@ -3,6 +3,7 @@ package ch.makery.log.util;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import ch.makery.log.model.GenericExtensionFilter;
 import ch.makery.log.services.IFindExtension;
 import ch.makery.log.services.IGenericExtensionFilter;
 

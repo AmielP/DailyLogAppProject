@@ -1,4 +1,4 @@
-package ch.makery.log.util;
+package ch.makery.log.model;
 
 import java.io.File;
 import java.io.FilenameFilter;

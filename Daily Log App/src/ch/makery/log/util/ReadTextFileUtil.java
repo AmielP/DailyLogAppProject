@@ -1,52 +1,67 @@
 package ch.makery.log.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import ch.makery.log.model.InputFile;
 import ch.makery.log.model.LogOverviewTemplate;
+import ch.makery.log.services.IPrepareFile;
+import jcuda.driver.CUfunction;
 
 public class ReadTextFileUtil extends LogOverviewTemplate
 {
 	private FileInputStream fileInputStream;
 	private byte[] textFileContent;
+	private IPrepareFile preparePtxFileUtil;
+	private File textFile;
 	
 	public ReadTextFileUtil()
 	{
+		preparePtxFileUtil = new PreparePtxFileUtil();
+		preparePtxFileUtil.setFunction(new CUfunction());
 		setSourceFile(new InputFile());
-		getSourceFile().setBuffer(new byte[10000]);
 	}
-
-	@Override
-	public void readTextFile(String selectUserPath) 
+	
+	private void assignTextFileToRead(String textFileName)
 	{
-//		byte[] buffer = new byte[100000];
-		
-		try 
+		getSourceFile().setFile(new File(textFileName));
+	}
+	
+	private void calculateBufferSizeFromFile(File textFile)
+	{
+		getSourceFile().setBuffer(new byte[(int) textFile.length()]);
+	}
+	
+	private void assignTextFileInputStream(String textFileName) throws FileNotFoundException
+	{
+		getSourceFile().setFunction(new FileInputStream(textFileName));
+	}
+	
+	@Override
+	public void readTextFile(String selectUserPath)
+	{
+		assignTextFileToRead(selectUserPath);
+		textFile = getSourceFile().getFile();
+		try
 		{
-			getSourceFile().setReadObject(new FileInputStream(selectUserPath));
-			fileInputStream = (FileInputStream) getSourceFile().getReadObject();
+			assignTextFileInputStream(selectUserPath);
+			fileInputStream = (FileInputStream)getSourceFile().getFunction();
+			calculateBufferSizeFromFile(textFile);
+
 			textFileContent = getSourceFile().getBuffer();
 			setLogOverviewStream(fileInputStream);
 			setLogOverviewContent(textFileContent);
 			
-			getSourceFile().readI(new FileInputStream(selectUserPath), selectUserPath);
-			
-			//Put something in relation to reading the file by byte streams here????
 			int nRead = 0;
 			
+			while((nRead = fileInputStream.read(textFileContent)) != -1) {}
 			
-			while((nRead = (fileInputStream).read(textFileContent)) != -1){}
-
-//			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-//			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-//			entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
-//
-//			((FileInputStream) fileInputStream).close();
+			fileInputStream.close();
 			
-			//inpu
-		} 
-		catch(FileNotFoundException e)
+		}
+		catch (FileNotFoundException e)
 		{
 			System.out.println("ERROR: Unable to open file, " + selectUserPath);
 		}
@@ -54,15 +69,10 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 		{
 			System.out.println("ERROR: Unable to read file, " + selectUserPath);
 		}
-
-//		int nRead = 0;
-//
-//		while((nRead = inputStream.read(buffer)) != -1){}
-//
-//		nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-//		subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-//		entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
-//
-//		inputStream.close();
+	}
+	
+	public FileInputStream getFileInputStream()
+	{
+		return fileInputStream;
 	}
 }

@@ -2,9 +2,6 @@ package ch.makery.log.model;
 
 import java.io.FileInputStream;
 
-import ch.makery.log.util.InputFile;
-import ch.makery.log.util.OutputFile;
-
 public abstract class LogOverviewTemplate 
 {
 	private InputFile sourceFile;

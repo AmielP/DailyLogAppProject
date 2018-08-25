@@ -1,9 +1,11 @@
 package ch.makery.log.services;
 
-import java.io.FileInputStream;
+import java.io.File;
 
 public interface IFileIO 
 {
-	void readI(Object readObject, String path);
+//	void readI(Object readObject, String path);
 	void writeO();
+	void setFile(File file);
+	File getFile();
 }

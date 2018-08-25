@@ -80,9 +80,9 @@ public class LogOverviewController
 	private File fileOrFolderOfAmiel = new File(dailyLogPathDirectoryOfAmiel);
 
 	private File fileOrFolderOfBCT = new File(dailyLogPathDirectoryOfBCT);
-	
+
 	private IAlert alert;
-	
+
 	private LogOverviewTemplate readTextFileUtil = new ReadTextFileUtil();
 
 	//	private String newLine = System.getProperty("line.separator");
@@ -104,42 +104,42 @@ public class LogOverviewController
 	}
 
 	//Delete this whenever possible
-//	private void readTextFile(String selectUserPath)
-//	{		
-//		try
-//		{
-//			byte[] buffer = new byte[100000];
-//
-//			FileInputStream inputStream = new FileInputStream(selectUserPath);
-//
-//			int nRead = 0;
-//
-//			while((nRead = inputStream.read(buffer)) != -1){}
-//
-//			//put match here
-//			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-//			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-//			entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
-//
-//			inputStream.close();
-//		}
-//		catch(FileNotFoundException e)
-//		{
-//			System.out.println("ERROR: Unable to open file, " + selectUserPath);
-//		}
-//		catch(IOException e)
-//		{
-//			System.out.println("ERROR: Unable to read file, " + selectUserPath);
-//		}
-//	}
-	
+	//	private void readTextFile(String selectUserPath)
+	//	{		
+	//		try
+	//		{
+	//			byte[] buffer = new byte[100000];
+	//
+	//			FileInputStream inputStream = new FileInputStream(selectUserPath);
+	//
+	//			int nRead = 0;
+	//
+	//			while((nRead = inputStream.read(buffer)) != -1){}
+	//
+	//			//put match here
+	//			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
+	//			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
+	//			entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
+	//
+	//			inputStream.close();
+	//		}
+	//		catch(FileNotFoundException e)
+	//		{
+	//			System.out.println("ERROR: Unable to open file, " + selectUserPath);
+	//		}
+	//		catch(IOException e)
+	//		{
+	//			System.out.println("ERROR: Unable to read file, " + selectUserPath);
+	//		}
+	//	}
+
 	private void setEachTextBoxWithContent(byte[] buffer)
 	{
 		nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
 		subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
 		entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
 	}
-	
+
 	private void wrapTextArea(TextArea textArea)
 	{
 		textArea.setWrapText(true);
@@ -159,7 +159,7 @@ public class LogOverviewController
 	private void determineExistingPath()
 	{
 		mostRecentTextFile = new FindMostRecentTextFile();
-//		readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
+		//		readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 
 		if(!fileOrFolderOfAmiel.exists() && fileOrFolderOfBCT.exists())
 		{
@@ -171,11 +171,9 @@ public class LogOverviewController
 		else if(!fileOrFolderOfBCT.exists() && fileOrFolderOfAmiel.exists())
 		{
 			System.out.println("Amiel's stuff");
-			readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
 			readTextFileUtil.readTextFile(dailyLogFileOfAmiel);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
-			System.out.println(new String (readTextFileUtil.getSourceFile().getBuffer()).length());
 		}
 		else if(!fileOrFolderOfBCT.exists() && !fileOrFolderOfAmiel.exists())
 		{
@@ -184,8 +182,22 @@ public class LogOverviewController
 			readTextFileUtil.readTextFile(dailyLogFileOfTest);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
-	}
 
+		System.out.println(new String (readTextFileUtil.getSourceFile().getBuffer()));
+		while(true)
+		{
+			System.out.print(new String (readTextFileUtil.getSourceFile().getBuffer()).length());
+
+			if(readTextFileUtil.getSourceFile().getBuffer().length == 1)
+			{
+				System.out.print(" byte");
+				break;
+			}
+			System.out.print(" bytes");
+			break;
+		}
+		System.out.print(" of data");
+	}
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
 	//or if user has entered data to an existing text file; upon which,
@@ -233,11 +245,11 @@ public class LogOverviewController
 	private void handleSendLog()
 	{
 		String title = "Warning";
-		
+
 		String headerText = "Attempting to access non-existent path: " + dailyLogPathDirectoryOfAmiel;
-		
+
 		String contentText = "Please send to an existing directory";
-		
+
 		//		DateUtil.updateTime(dateLabel);
 		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
 		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
