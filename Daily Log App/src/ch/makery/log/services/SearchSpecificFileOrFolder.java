@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class SearchSpecificFileOrFolder implements IFileOrDirectory// extends FindMostRecentFile
 {	
@@ -47,14 +48,18 @@ public class SearchSpecificFileOrFolder implements IFileOrDirectory// extends Fi
 //		findTextFileExtension.listFile(filePath, extension);
 //	}
 	
-	public void defineMostRecentFile(String filePath, String extension)
+	public void defineMostRecentFile(String filePath, String prefix, String extension)
 	{	
 		parentFolder = Paths.get(filePath);
 		
 		mostRecentFileOrFolder = Arrays
 				.stream(parentFolder.toFile().listFiles())
-				.filter(f -> f.getAbsolutePath().endsWith(extension)) //For files only, uncomment this code
+				.filter(f -> (f.getName().startsWith(prefix)) && (f.getAbsolutePath().endsWith(extension))) //For files only, uncomment this code
 				.max((f1, f2) -> Long.compare(f1.lastModified(), f2.lastModified())); //filter is defined by its parameter, f, becoming a flag for an existent or non-existent file);
+		
+		//Checks to see if specific file type and name is in folder:
+		Arrays.stream(parentFolder.toFile().listFiles()).filter(f -> (f.getAbsolutePath().startsWith(prefix))).forEach(System.out::println);
+//		System.out.println("mostRecentFileOrFolder: " + mostRecentFileOrFolder);
 	}
 	
 	public void defineMostRecentFolder(String filePath)

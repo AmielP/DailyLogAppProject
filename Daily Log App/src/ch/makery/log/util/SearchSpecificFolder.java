@@ -32,18 +32,18 @@ public class SearchSpecificFolder extends SearchSpecificFileOrFolder implements 
 	//	}
 
 	//Figure out how to implement this method if it remains necessary to do so
-	private String mostRecentFile(ISearchFileOrDirectory findMostRecentFolder, String folderPath, String unusedExtension)
+	private String mostRecentFile(ISearchFileOrDirectory findMostRecentFolder, String folderPath, String prefix, String unusedExtension)
 	{
-		return findMostRecentFolder.findFileOrFolder(folderPath, unusedExtension);
+		return findMostRecentFolder.findFileOrFolder(folderPath, prefix, unusedExtension);
 	}
 
 	@Override
-	public String findFileOrFolder(String folderPath, String unusedExtension) 
+	public String findFileOrFolder(String folderPath, String prefix, String unusedExtension) 
 	{
 		//Delete this when you finish with the extension thing
 		//	fileExtension = new FindCertainExtension();
 
-		ISearchFileOrDirectory findFolder = (str1, str2) ->
+		ISearchFileOrDirectory findFolder = (str1, str2, str3) ->
 		{
 			setFolder(Paths.get(folderPath));
 
@@ -64,6 +64,6 @@ public class SearchSpecificFolder extends SearchSpecificFileOrFolder implements 
 			return null;
 		};
 
-		return mostRecentFile(findFolder, folderPath, unusedExtension);
+		return mostRecentFile(findFolder, folderPath, prefix, unusedExtension);
 	}
 }

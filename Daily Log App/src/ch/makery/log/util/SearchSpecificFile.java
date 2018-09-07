@@ -32,30 +32,29 @@ public class SearchSpecificFile extends SearchSpecificFileOrFolder implements IS
 	//	}
 
 	//Figure out how to implement this method if it remains necessary to do so
-	private String mostRecentFile(ISearchFileOrDirectory findMostRecentFile, String filePath, String extension)
+	private String mostRecentFile(ISearchFileOrDirectory findMostRecentFile, String filePath, String prefix, String extension)
 	{
-		return findMostRecentFile.findFileOrFolder(filePath, extension);
+		return findMostRecentFile.findFileOrFolder(filePath, prefix, extension);
 	}
 
 	@Override
-	public String findFileOrFolder(String filePath, String extension) 
+	public String findFileOrFolder(String filePath, String prefix, String extension) 
 	{
-		//Delete this when you finish with the extension thing
-			FindCertainExtension fileExtension = new FindCertainExtension();
+		//Delete OR keep this when you finish with the extension thing
+		FindCertainPrefixOrExtension fileExtension = new FindCertainPrefixOrExtension();
 
-		ISearchFileOrDirectory findFile = (str1, str2) ->
+		ISearchFileOrDirectory findFile = (str1, str2, str3) ->
 		{
 			setFolder(Paths.get(filePath));
 
-			defineMostRecentFile(filePath, extension);
+			defineMostRecentFile(filePath, prefix, extension);
 
 			if(getFileOrDirectory().isPresent())
 			{
 				String getMostRecentFilePath = getFileOrDirectory().get().getPath();
 
-				//Delete this whenever you finish with fixing the extension thing
-							fileExtension.listFile(filePath, extension);
-							System.out.println(getMostRecentFilePath);
+				//Delete OR keep this whenever you finish with fixing the extension thing
+				fileExtension.listFile(filePath, prefix, extension);
 				return getMostRecentFilePath;
 			}
 			else
@@ -65,6 +64,6 @@ public class SearchSpecificFile extends SearchSpecificFileOrFolder implements IS
 			return null;
 		};
 
-		return mostRecentFile(findFile, filePath, extension);
+		return mostRecentFile(findFile, filePath, prefix, extension);
 	}
 }

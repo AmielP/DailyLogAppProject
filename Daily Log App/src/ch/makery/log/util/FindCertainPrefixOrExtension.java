@@ -3,18 +3,18 @@ package ch.makery.log.util;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import ch.makery.log.model.GenericExtensionFilter;
+import ch.makery.log.model.GenericFilter;
 import ch.makery.log.services.IFindExtension;
-import ch.makery.log.services.IGenericExtensionFilter;
+//import ch.makery.log.services.IGenericFilter;
 
-public class FindCertainExtension implements IFindExtension
+public class FindCertainPrefixOrExtension implements IFindExtension
 {	
-	private IGenericExtensionFilter filter;
+	private FilenameFilter filter;
 	
 	@Override
-	public void listFile(String fileDirectory, String extension)
+	public void listFile(String fileDirectory, String prefix, String extension)
 	{
-		filter = new GenericExtensionFilter(extension);
+		filter = new GenericFilter(prefix, extension);
 		
 		File directory = new File(fileDirectory);
 		
@@ -28,13 +28,13 @@ public class FindCertainExtension implements IFindExtension
 		
 		if(list.length == 0)
 		{
-			System.out.println("ERROR: There are no files that exist ending with " + extension);
+			System.out.println("ERROR: There are no files that exist starting with " + prefix + " or ending with " + extension);
 		}
 		
 		for(String file : list)
 		{
 			String temp = new StringBuffer(fileDirectory).append(File.separator).append(file).toString();
-			System.out.println(temp);
+			System.out.println("listFile: " + temp);
 		}
 	}
 }

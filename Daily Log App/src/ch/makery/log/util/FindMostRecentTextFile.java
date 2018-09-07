@@ -4,6 +4,7 @@ import ch.makery.log.services.FindMostRecentFile;
 
 public class FindMostRecentTextFile extends FindMostRecentFile
 {	
+	private String textFilePrefix = "Entry_";
 	private String textFileExtensionType = ".txt";
 	
 	public FindMostRecentTextFile()
@@ -14,7 +15,7 @@ public class FindMostRecentTextFile extends FindMostRecentFile
 	@Override
 	public String targetFileOrFolderName(String filePath)
 	{
-		return getSearchFileOrFolder().findFileOrFolder(filePath, textFileExtensionType);
+		return getSearchFileOrFolder().findFileOrFolder(filePath, textFilePrefix, textFileExtensionType);
 	}
 	
 //	@Override
