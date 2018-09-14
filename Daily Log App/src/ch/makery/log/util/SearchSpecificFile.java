@@ -43,18 +43,18 @@ public class SearchSpecificFile extends SearchSpecificFileOrFolder implements IS
 		//Delete OR keep this when you finish with the extension thing
 		FindCertainPrefixOrExtension fileExtension = new FindCertainPrefixOrExtension();
 
-		ISearchFileOrDirectory findFile = (str1, str2, str3) ->
+		ISearchFileOrDirectory findFile = (str1, str2, str3) -> //(filePath, prefix, extension)
 		{
-			setFolder(Paths.get(filePath));
+			setFolder(Paths.get(str1));
 
-			defineMostRecentFile(filePath, prefix, extension);
+			defineMostRecentFile(str1, str2, str3);
 
 			if(getFileOrDirectory().isPresent())
 			{
 				String getMostRecentFilePath = getFileOrDirectory().get().getPath();
 
 				//Delete OR keep this whenever you finish with fixing the extension thing
-				fileExtension.listFile(filePath, prefix, extension);
+				fileExtension.listFile(str1, str2, str3);
 				return getMostRecentFilePath;
 			}
 			else
