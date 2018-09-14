@@ -1,5 +1,6 @@
 package ch.makery.log.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 
 public abstract class LogOverviewTemplate 
@@ -50,6 +51,10 @@ public abstract class LogOverviewTemplate
 	{
 		return logOverviewContent;
 	}
+	
+	public abstract void setLogFilePath(File file);
+	
+	public abstract File getLogFilePath();
 	
 	public abstract void readTextFile(String selectUserPath);
 }
