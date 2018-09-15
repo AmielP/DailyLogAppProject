@@ -7,6 +7,7 @@ public abstract class LogOverviewTemplate
 {
 	private InputFile sourceFile;
 	private OutputFile destinationFile;
+	private PrimaryStage primStage;
 	private FileInputStream logOverviewStream;
 	private byte[] logOverviewContent;
 	
@@ -52,9 +53,20 @@ public abstract class LogOverviewTemplate
 		return logOverviewContent;
 	}
 	
-	public abstract void setLogFilePath(File file);
+	public void setPrimStage(PrimaryStage primStage)
+	{
+		this.primStage = primStage;
+	}
 	
-	public abstract File getLogFilePath();
+	public PrimaryStage getPrimStage()
+	{
+		return primStage;
+	}
 	
-	public abstract void readTextFile(String selectUserPath);
+	//MOVE TO DIFFERENT CLASS AND THEN DELETE
+//	public abstract void setLogFilePath(File file);
+//	
+//	public abstract File getLogFilePath();
+	
+	public abstract void readTextFile(Object selectUserPath);
 }

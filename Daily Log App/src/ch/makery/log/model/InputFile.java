@@ -2,6 +2,7 @@ package ch.makery.log.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 import ch.makery.log.services.IFileIO;
 import ch.makery.log.services.IPrepareFile;
@@ -133,4 +134,10 @@ public class InputFile implements IFileIO, IPrepareFile
 //			System.out.println("ERROR: Unable to read file, " + selectUserPath);
 //		}
 //	}
+
+	@Override
+	public void setPreferences(Preferences preferences) {}
+
+	@Override
+	public Preferences getPreferences() {return null;}
 }

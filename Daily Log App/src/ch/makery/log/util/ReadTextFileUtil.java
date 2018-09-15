@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.model.InputFile;
@@ -26,9 +25,9 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 		setSourceFile(new InputFile());
 	}
 	
-	private void assignTextFileToRead(String textFileName)
+	private void assignTextFileToRead(Object textFileName)
 	{
-		getSourceFile().setFile(new File(textFileName));
+		getSourceFile().setFile(new File((String)textFileName));
 	}
 	
 	private void calculateBufferSizeFromFile(File textFile)
@@ -36,37 +35,42 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 		getSourceFile().setBuffer(new byte[(int) textFile.length()]);
 	}
 	
-	private void assignTextFileInputStream(String textFileName) throws FileNotFoundException
+	private void assignTextFileInputStream(Object textFileName) throws FileNotFoundException
 	{
-		getSourceFile().setFunction(new FileInputStream(textFileName));
+		getSourceFile().setFunction(new FileInputStream((String)textFileName));
 	}
 	
-	@Override
-	public void setLogFilePath(File file) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public File getLogFilePath() 
-	{
-		// TODO Auto-generated method stub
-		Preferences preferences = Preferences.userNodeForPackage(MainApp.class);
-		String filePath = preferences.get("filePath", null);
-		if(filePath != null)
-		{
-			getSourceFile().setFile(new File(filePath));
-			return getSourceFile().getFile();
-		}
-		else
-		{
-			return null;
-		}
-	}
+	//MOVE TO DIFFERENT CLASS AND THEN DELETE
+//	@Override
+//	public void setLogFilePath(File file) 
+//	{	
+//		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
+//		if(file != null)
+//		{
+//			getDestinationFile().getPreferences().put("filePath", file.getPath());
+//			
+//			
+//		}
+//	}
+//
+//	@Override
+//	public File getLogFilePath() 
+//	{
+//		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
+//		String filePath = getDestinationFile().getPreferences().get("filePath", null);
+//		if(filePath != null)
+//		{
+//			getSourceFile().setFile(new File(filePath));
+//			return getSourceFile().getFile();
+//		}
+//		else
+//		{
+//			return null;
+//		}
+//	}
 	
 	@Override
-	public void readTextFile(String selectUserPath)
+	public void readTextFile(Object selectUserPath)
 	{
 		assignTextFileToRead(selectUserPath);
 		textFile = getSourceFile().getFile();
