@@ -244,6 +244,11 @@ public class LogOverviewController
 	@FXML
 	private void handleSendLog()
 	{
+		//First: make a new window for save file option
+		//linesOfEntry list of log string objects + log.setlog to value of log properties (i.e, name, date, subject, entry) +
+		//file + createNewFile() + Files.write need to go in different class and program (maybe) to an existing interface
+		//add alert to error check and make sure if folder doesn't exist that the error is handled properly.
+		
 		String title = "Warning";
 
 		String headerText = "Attempting to access non-existent path: " + dailyLogPathDirectoryOfAmiel;

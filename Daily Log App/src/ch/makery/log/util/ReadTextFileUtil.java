@@ -40,35 +40,6 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 		getSourceFile().setFunction(new FileInputStream((String)textFileName));
 	}
 	
-	//MOVE TO DIFFERENT CLASS AND THEN DELETE
-//	@Override
-//	public void setLogFilePath(File file) 
-//	{	
-//		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
-//		if(file != null)
-//		{
-//			getDestinationFile().getPreferences().put("filePath", file.getPath());
-//			
-//			
-//		}
-//	}
-//
-//	@Override
-//	public File getLogFilePath() 
-//	{
-//		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
-//		String filePath = getDestinationFile().getPreferences().get("filePath", null);
-//		if(filePath != null)
-//		{
-//			getSourceFile().setFile(new File(filePath));
-//			return getSourceFile().getFile();
-//		}
-//		else
-//		{
-//			return null;
-//		}
-//	}
-	
 	@Override
 	public void readTextFile(Object selectUserPath)
 	{
