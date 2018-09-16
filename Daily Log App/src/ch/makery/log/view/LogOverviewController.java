@@ -66,7 +66,7 @@ public class LogOverviewController
 	private String dailyLogPathDirectoryOfAmiel = "D:/Documents (D)/Daily Log";
 
 	//hard-coded path. may change later
-	private String dailyLogPathDirectoryOfBCT = "C:Bryce";
+	private String dailyLogPathDirectoryOfBCT = "C:/Users/User/Desktop";
 
 	//hard-coded path. may change later
 	private String dailyLogPathDirectoryOfTest = "D:/TestDailyLog";
