@@ -4,6 +4,7 @@ package ch.makery.log.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -13,6 +14,8 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +43,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 
 public class LogOverviewController
 {
@@ -156,6 +160,7 @@ public class LogOverviewController
 		DateUtil.displayTimer();
 	}
 
+	//Change determineExistingPath() to determineBytesOfData();
 	private void determineExistingPath()
 	{
 		mostRecentTextFile = new FindMostRecentTextFile();
@@ -198,6 +203,41 @@ public class LogOverviewController
 		}
 		System.out.print(" of data");
 	}
+	
+	//make OOP later
+	private void SaveFile(List<String> linesOfEntry, File file)
+	{
+		try
+		{
+			Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			Logger.getLogger(LogOverviewController.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	//make OOP later
+	private void chooseFileToSave(List<String> linesOfEntry)
+	{
+		FileChooser fileChooser = new FileChooser();
+		
+		fileChooser.setInitialFileName("Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()));
+		
+		FileChooser.ExtensionFilter extensionFilter1, extensionFilter2;
+		extensionFilter1 = new FileChooser.ExtensionFilter("TXT files (*txt)", "*.txt");
+		extensionFilter2 = new FileChooser.ExtensionFilter("all files (*)", "*.*");
+		fileChooser.getExtensionFilters().addAll(extensionFilter1, extensionFilter2);
+		
+		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+	
+		if(file != null)
+		{
+			SaveFile(linesOfEntry, file);
+		}
+	}
+	
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
 	//or if user has entered data to an existing text file; upon which,
@@ -258,26 +298,31 @@ public class LogOverviewController
 		//		DateUtil.updateTime(dateLabel);
 		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
 		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
-		printLogDummy();
-		if(!fileOrFolderOfAmiel.exists())
-		{
-			alert = new AlertUtil();
-			alert.runAlertMessage(new Alert(AlertType.WARNING), mainApp, title, headerText, contentText);
-		}
-		else
-		{
-			File file = new File("D:/Documents (D)/Daily Log/Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()) + ".txt");
-			try
-			{
-				file.createNewFile();
-				Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
-				//			printToConsole.print(file);
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+		chooseFileToSave(linesOfEntry);
+		
+		//Test SaveFile Window
+//		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
+//		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
+//		printLogDummy();
+//		if(!fileOrFolderOfAmiel.exists())
+//		{
+//			alert = new AlertUtil();
+//			alert.runAlertMessage(new Alert(AlertType.WARNING), mainApp, title, headerText, contentText);
+//		}
+//		else
+//		{
+//			File file = new File("D:/Documents (D)/Daily Log/Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()) + ".txt");
+//			try
+//			{
+//				file.createNewFile();
+//				Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
+//				//			printToConsole.print(file);
+//			}
+//			catch(IOException e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	@FXML
