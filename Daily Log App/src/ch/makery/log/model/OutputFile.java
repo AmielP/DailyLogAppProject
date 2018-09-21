@@ -17,7 +17,6 @@ public class OutputFile implements IFileIO
 	public void writeO() 
 	{
 		// TODO Auto-generated method stub
-		//TODO TODO TODO
 	}
 
 	@Override
