@@ -2,6 +2,7 @@ package ch.makery.log.model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import ch.makery.log.services.IFileIO;
@@ -43,6 +44,12 @@ public class OutputFile implements IFileIO
 	public Preferences getPreferences() 
 	{
 		return preferences;
+	}
+
+	@Override
+	public void saveFile(List<Object> objectList, File file) 
+	{
+		// TODO Nothing	
 	}
 	
 }

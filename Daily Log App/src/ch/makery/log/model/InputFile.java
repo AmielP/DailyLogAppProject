@@ -2,6 +2,7 @@ package ch.makery.log.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import ch.makery.log.services.IFileIO;
@@ -140,4 +141,10 @@ public class InputFile implements IFileIO, IPrepareFile
 
 	@Override
 	public Preferences getPreferences() {return null;}
+
+	@Override
+	public void saveFile(List<Object> objectList, File file) 
+	{
+		// TODO Nothing	
+	}
 }

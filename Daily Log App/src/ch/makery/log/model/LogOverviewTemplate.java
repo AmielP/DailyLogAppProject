@@ -2,6 +2,7 @@ package ch.makery.log.model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 public abstract class LogOverviewTemplate 
 {
@@ -9,6 +10,7 @@ public abstract class LogOverviewTemplate
 	private OutputFile destinationFile;
 	private PrimaryStage primStage;
 	private FileInputStream logOverviewStream;
+	private SaveAndOpenFileOption saveAndOpenFileOption;
 	private byte[] logOverviewContent;
 	
 	public void setSourceFile(InputFile sourceFile)
@@ -63,10 +65,15 @@ public abstract class LogOverviewTemplate
 		return primStage;
 	}
 	
-	//MOVE TO DIFFERENT CLASS AND THEN DELETE
-//	public abstract void setLogFilePath(File file);
-//	
-//	public abstract File getLogFilePath();
+	public void setSaveAndOpenFileOption(SaveAndOpenFileOption saveAndOpenFileOption)
+	{
+		this.saveAndOpenFileOption = saveAndOpenFileOption;
+	}
 	
-	public abstract void readTextFile(Object selectUserPath);
+	public SaveAndOpenFileOption getSaveAndOpenFileOption()
+	{
+		return saveAndOpenFileOption;
+	}
+	
+	public abstract void chooseFileToSave(List<Object> objectList, File file);
 }

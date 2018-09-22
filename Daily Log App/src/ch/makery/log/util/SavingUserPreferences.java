@@ -1,6 +1,7 @@
 package ch.makery.log.util;
 
 import java.io.File;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import ch.makery.log.MainApp;
@@ -47,10 +48,9 @@ public class SavingUserPreferences extends LogOverviewTemplate
 	}
 
 	@Override
-	public void readTextFile(Object selectUserPath) 
+	public void chooseFileToSave(List<Object> objectList, File file) 
 	{
-		// TODO Auto-generated method stub
-		
+		// TODO Nothing
 	}
 
 }

@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import ch.makery.log.MainApp;
 import ch.makery.log.model.Log;
 import ch.makery.log.model.LogOverviewTemplate;
+import ch.makery.log.model.SaveAndOpenFileOption;
 import ch.makery.log.services.ISearchFileOrDirectory;
 import ch.makery.log.services.FindMostRecentFile;
 import ch.makery.log.services.IAlert;
@@ -45,7 +46,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
-public class LogOverviewController
+public class LogOverviewController extends LogOverviewTemplate
 {
 	@FXML
 	private TextField nameTextField;
@@ -88,6 +89,14 @@ public class LogOverviewController
 	private IAlert alert;
 
 	private LogOverviewTemplate readTextFileUtil = new ReadTextFileUtil();
+	
+	String initialLogFileName;
+	
+	private String extensionLogFileName = "Text (*txt)";
+	
+	private String extensionLogFileFilter = "*.txt";
+	
+	private File file;
 
 	//	private String newLine = System.getProperty("line.separator");
 
@@ -106,36 +115,6 @@ public class LogOverviewController
 			}
 		});
 	}
-
-	//Delete this whenever possible
-	//	private void readTextFile(String selectUserPath)
-	//	{		
-	//		try
-	//		{
-	//			byte[] buffer = new byte[100000];
-	//
-	//			FileInputStream inputStream = new FileInputStream(selectUserPath);
-	//
-	//			int nRead = 0;
-	//
-	//			while((nRead = inputStream.read(buffer)) != -1){}
-	//
-	//			//put match here
-	//			nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-	//			subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-	//			entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
-	//
-	//			inputStream.close();
-	//		}
-	//		catch(FileNotFoundException e)
-	//		{
-	//			System.out.println("ERROR: Unable to open file, " + selectUserPath);
-	//		}
-	//		catch(IOException e)
-	//		{
-	//			System.out.println("ERROR: Unable to read file, " + selectUserPath);
-	//		}
-	//	}
 
 	private void setEachTextBoxWithContent(byte[] buffer)
 	{
@@ -170,21 +149,21 @@ public class LogOverviewController
 		{
 			System.out.println("BCT's stuff");
 			dailyLogFileOfBCT = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfBCT);
-			readTextFileUtil.readTextFile(dailyLogFileOfBCT);
+			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfBCT);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
 		else if(!fileOrFolderOfBCT.exists() && fileOrFolderOfAmiel.exists())
 		{
 			System.out.println("Amiel's stuff");
 			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
-			readTextFileUtil.readTextFile(dailyLogFileOfAmiel);
+			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfAmiel);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
 		else if(!fileOrFolderOfBCT.exists() && !fileOrFolderOfAmiel.exists())
 		{
 			System.out.println("The other guy's stuff");
 			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest);
-			readTextFileUtil.readTextFile(dailyLogFileOfTest);
+			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
 
@@ -204,37 +183,20 @@ public class LogOverviewController
 		System.out.print(" of data");
 	}
 	
-	//make OOP later
-	private void SaveFile(List<String> linesOfEntry, File file)
+	@Override
+	public void chooseFileToSave(List<Object> objectList, File file) 
 	{
-		try
-		{
-			Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-			Logger.getLogger(LogOverviewController.class.getName()).log(Level.SEVERE, null, e);
-		}
-	}
-	
-	//make OOP later
-	private void chooseFileToSave(List<String> linesOfEntry)
-	{
-		FileChooser fileChooser = new FileChooser();
+		initialLogFileName = "Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry());
 		
-		fileChooser.setInitialFileName("Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()));
+		setSaveAndOpenFileOption(new SaveAndOpenFileOption());
 		
-		FileChooser.ExtensionFilter extensionFilter1, extensionFilter2;
-		extensionFilter1 = new FileChooser.ExtensionFilter("TXT files (*txt)", "*.txt");
-		extensionFilter2 = new FileChooser.ExtensionFilter("all files (*)", "*.*");
-		fileChooser.getExtensionFilters().addAll(extensionFilter1, extensionFilter2);
+		getSaveAndOpenFileOption().listFile(initialLogFileName, extensionLogFileName, extensionLogFileFilter);
 		
-		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
-	
+		file = getSaveAndOpenFileOption().getFileChooser().showSaveDialog(mainApp.getPrimaryStage());
+		
 		if(file != null)
 		{
-			SaveFile(linesOfEntry, file);
+			getSaveAndOpenFileOption().saveFile(objectList, file);
 		}
 	}
 	
@@ -284,9 +246,6 @@ public class LogOverviewController
 	@FXML
 	private void handleSendLog()
 	{
-		//First: make a new window for save file option
-		//linesOfEntry list of log string objects + log.setlog to value of log properties (i.e, name, date, subject, entry) +
-		//file + createNewFile() + Files.write need to go in different class and program (maybe) to an existing interface
 		//add alert to error check and make sure if folder doesn't exist that the error is handled properly.
 		
 		String title = "Warning";
@@ -295,34 +254,9 @@ public class LogOverviewController
 
 		String contentText = "Please send to an existing directory";
 
-		//		DateUtil.updateTime(dateLabel);
-		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
+		List<Object> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
 		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
-		chooseFileToSave(linesOfEntry);
-		
-		//Test SaveFile Window
-//		List<String> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
-//		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
-//		printLogDummy();
-//		if(!fileOrFolderOfAmiel.exists())
-//		{
-//			alert = new AlertUtil();
-//			alert.runAlertMessage(new Alert(AlertType.WARNING), mainApp, title, headerText, contentText);
-//		}
-//		else
-//		{
-//			File file = new File("D:/Documents (D)/Daily Log/Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()) + ".txt");
-//			try
-//			{
-//				file.createNewFile();
-//				Files.write(file.toPath(), linesOfEntry, Charset.forName("UTF-8"));
-//				//			printToConsole.print(file);
-//			}
-//			catch(IOException e)
-//			{
-//				e.printStackTrace();
-//			}
-//		}
+		chooseFileToSave(linesOfEntry, file);
 	}
 
 	@FXML

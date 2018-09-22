@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.model.InputFile;
@@ -40,7 +41,6 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 		getSourceFile().setFunction(new FileInputStream((String)textFileName));
 	}
 	
-	@Override
 	public void readTextFile(Object selectUserPath)
 	{
 		assignTextFileToRead(selectUserPath);
@@ -75,5 +75,11 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 	public FileInputStream getFileInputStream()
 	{
 		return fileInputStream;
+	}
+
+	@Override
+	public void chooseFileToSave(List<Object> objectList, File file) 
+	{
+		// TODO Nothing
 	}
 }

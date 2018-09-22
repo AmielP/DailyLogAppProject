@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import jcuda.driver.CUcontext;
@@ -157,4 +158,10 @@ public class PreparePtxFileUtil implements IPrepareFile, IFileIO
 
 	@Override
 	public Preferences getPreferences() {return null;}
+
+	@Override
+	public void saveFile(List<Object> objectList, File file) 
+	{
+		// TODO Nothing	
+	}
 }
