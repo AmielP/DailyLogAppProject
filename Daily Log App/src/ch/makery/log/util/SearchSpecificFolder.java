@@ -1,6 +1,7 @@
 
 package ch.makery.log.util;
 
+import java.io.File;
 import java.nio.file.Paths;
 
 import ch.makery.log.services.ISearchFileOrDirectory;

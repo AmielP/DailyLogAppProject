@@ -2,33 +2,17 @@ package ch.makery.log.view;
 
 //import java.beans.EventHandler;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.model.Log;
 import ch.makery.log.model.LogOverviewTemplate;
 import ch.makery.log.model.SaveAndOpenFileOption;
-import ch.makery.log.services.ISearchFileOrDirectory;
 import ch.makery.log.services.FindMostRecentFile;
 import ch.makery.log.services.IAlert;
 import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
-import ch.makery.log.util.AlertUtil;
 import ch.makery.log.util.DateUtil;
 import ch.makery.log.util.FindMostRecentTextFile;
 import ch.makery.log.util.MatchLogContent;
@@ -43,8 +27,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 
 public class LogOverviewController extends LogOverviewTemplate
 {
@@ -74,7 +56,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	private String dailyLogPathDirectoryOfBCT = "C:/Users/User/Desktop";
 
 	//hard-coded path. may change later
-	private String dailyLogPathDirectoryOfTest = "D:/TestDailyLog";
+	private String dailyLogPathDirectoryOfTest = "D:/";
 
 	private String dailyLogFileOfAmiel;
 
@@ -128,10 +110,10 @@ public class LogOverviewController extends LogOverviewTemplate
 		textArea.setWrapText(true);
 	}
 
-	private void printLogDummy()
-	{
-		System.out.println(log.getName() + "\n" + log.getDate() + "\n" + log.getSubject() + "\n" + log.getEntry());
-	}
+//	private void printLogDummy()
+//	{
+//		System.out.println(log.getName() + "\n" + log.getDate() + "\n" + log.getSubject() + "\n" + log.getEntry());
+//	}
 
 	private void showLogDetails()
 	{
@@ -161,8 +143,9 @@ public class LogOverviewController extends LogOverviewTemplate
 		}
 		else if(!fileOrFolderOfBCT.exists() && !fileOrFolderOfAmiel.exists())
 		{
-			System.out.println("The other guy's stuff");
-			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest);
+//			System.out.println("The other guy's stuff");
+			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest); //Work on ifFileNotFoundInDirectory, then createFile
+			System.out.println("dailyLogFileOfTest " + dailyLogFileOfTest);
 			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}

@@ -11,6 +11,16 @@ public class FindCertainPrefixOrExtension implements IFindExtension
 {	
 	private FilenameFilter filter;
 	
+	public void setFilter(FilenameFilter filter)
+	{
+		this.filter = filter;
+	}
+	
+	public FilenameFilter getFilter()
+	{
+		return filter;
+	}
+	
 	@Override
 	public void listFile(String fileDirectory, String prefix, String extension)
 	{

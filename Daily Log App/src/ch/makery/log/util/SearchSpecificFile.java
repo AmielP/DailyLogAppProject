@@ -1,7 +1,16 @@
 
 package ch.makery.log.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import ch.makery.log.services.ISearchFileOrDirectory;
 import ch.makery.log.services.SearchSpecificFileOrFolder;
@@ -52,16 +61,28 @@ public class SearchSpecificFile extends SearchSpecificFileOrFolder implements IS
 			if(getFileOrDirectory().isPresent())
 			{
 				String getMostRecentFilePath = getFileOrDirectory().get().getPath();
-
 				//Delete OR keep this whenever you finish with fixing the extension thing
 				fileExtension.listFile(str1, str2, str3);
 				return getMostRecentFilePath;
 			}
 			else
 			{
-				System.out.println("ERROR: Folder is empty!");
+				//Non object-oriented design structure. FIX LATER MAYBE?
+				System.out.println("No log in directory. Creating temporary log file...\n");
+				List<String> lines = Arrays.asList("Name:", "Date:", "Subject:", "Entry:");
+				String newTextFileNameWithPath = str1 + str2 + "null" + str3;
+				try 
+				{
+					setFolder(Paths.get(newTextFileNameWithPath));
+					Files.write(getFolder(), lines, Charset.forName("UTF-8"));
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+				return findFileOrFolder(str1, str2, str3);
 			}
-			return null;
+//			return null;
 		};
 
 		return mostRecentFile(findFile, filePath, prefix, extension);
