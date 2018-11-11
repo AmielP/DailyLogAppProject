@@ -10,4 +10,4 @@ DO NOT CHANGE THE NAME OF THE FILE WHEN SAVING!
 
 Enjoy!
 
-To run, type java -jar daily_log_app_vALPHA_1.2.jar
+To run, type java -jar daily_log_app_vALPHA_1.2.jar in your command prompt or terminal and *not* by double-clicking the app.
