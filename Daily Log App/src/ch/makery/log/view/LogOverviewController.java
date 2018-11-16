@@ -56,7 +56,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	private String dailyLogPathDirectoryOfBCT = "C:/Users/User/Desktop";
 
 	//hard-coded path. may change later
-	private String dailyLogPathDirectoryOfTest = "D:/";
+	private String dailyLogPathDirectoryOfTest = "C:/Users/Public/Documents";
 
 	private String dailyLogFileOfAmiel;
 
