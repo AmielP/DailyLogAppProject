@@ -23,6 +23,8 @@ import javafx.scene.Node;
 //Need to update Java SDK
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 //Need to update Java SDK
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -41,7 +43,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private Label sendLabel;
 
-	private MainApp mainApp;
+	private MainApp mainApp = new MainApp();
 
 	private ILogTemplate log = new Log();
 
@@ -56,7 +58,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	private String dailyLogPathDirectoryOfBCT = "C:/Users/User/Desktop";
 
 	//hard-coded path. may change later
-	private String dailyLogPathDirectoryOfTest = "C:/Users/Public/Documents";
+	private String dailyLogPathDirectoryOfTest;
 
 	private String dailyLogFileOfAmiel;
 
@@ -79,6 +81,8 @@ public class LogOverviewController extends LogOverviewTemplate
 	private String extensionLogFileFilter = "*.txt";
 	
 	private File file;
+	
+	File selectedDirectory;
 
 	//	private String newLine = System.getProperty("line.separator");
 
@@ -109,6 +113,23 @@ public class LogOverviewController extends LogOverviewTemplate
 	{
 		textArea.setWrapText(true);
 	}
+	
+	private void chooseExistingPath()
+	{
+		final Label labelSelectedDirectory = new Label();
+
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		selectedDirectory = directoryChooser.showDialog(mainApp.getPrimaryStage());
+		
+		if(selectedDirectory == null)
+		{
+			labelSelectedDirectory.setText("No Directory Selected");
+		}
+		else
+		{
+			labelSelectedDirectory.setText(selectedDirectory.getAbsolutePath());
+		}
+	}
 
 //	private void printLogDummy()
 //	{
@@ -124,6 +145,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	//Change determineExistingPath() to determineBytesOfData();
 	private void determineExistingPath()
 	{
+		dailyLogPathDirectoryOfTest = selectedDirectory.toString();
 		mostRecentTextFile = new FindMostRecentTextFile();
 		//		readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 
@@ -191,10 +213,9 @@ public class LogOverviewController extends LogOverviewTemplate
 	private void initialize()
 	{
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
-
+		chooseExistingPath();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
-
 		activatePaneOnDefaultRun(nameTextField);
 
 		wrapTextArea(entryTextArea);

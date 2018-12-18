@@ -18,34 +18,34 @@ public class MainApp extends Application
 {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-//	private Label dateLabel = new Label("message1");
+	//	private Label dateLabel = new Label("message1");
 	private ObservableList<Log> logData = FXCollections.observableArrayList();
-	
+
 	public MainApp()
 	{
 		logData.add(new Log("Johnny Valentino"));
 		logData.add(new Log("Rudolph Reed"));
 		logData.add(new Log("Lou Vixen"));
 		logData.add(new Log("Vivien Leigh"));
-		logData.add(new Log("Nicole Stanford"));
+		logData.add(new Log("Nicole Standford"));
 	}
-	
+
 	public ObservableList<Log> getLogData()
 	{
 		return logData;
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) 
 	{
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Daily Log App");
-		
+
 		initRootLayout();
-		
+
 		showLogOverview();
 	}
-	
+
 	//Initialize the root layout
 	public void initRootLayout()
 	{
@@ -54,7 +54,7 @@ public class MainApp extends Application
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane)loader.load();
-			
+
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -64,7 +64,7 @@ public class MainApp extends Application
 			e.printStackTrace();
 		}
 	}
-	
+
 	//Shows the log overview inside the root layout
 	public void showLogOverview()
 	{
@@ -73,9 +73,9 @@ public class MainApp extends Application
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/LogOverview.fxml"));
 			AnchorPane logOverview = (AnchorPane)loader.load();
-			
+
 			rootLayout.setCenter(logOverview);
-			
+
 			LogOverviewController controller = loader.getController();
 			controller.setMainApp(this);
 		}
@@ -84,7 +84,12 @@ public class MainApp extends Application
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void setPrimaryStage(Stage primaryStage)
+	{
+		this.primaryStage = primaryStage;
+	}
+
 	//Returns the main stage
 	public Stage getPrimaryStage()
 	{
