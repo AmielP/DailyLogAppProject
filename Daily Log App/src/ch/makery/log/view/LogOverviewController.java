@@ -124,6 +124,8 @@ public class LogOverviewController extends LogOverviewTemplate
 		if(selectedDirectory == null)
 		{
 			labelSelectedDirectory.setText("No Directory Selected");
+			System.out.println("Did not select a directory");
+			System.exit(0);
 		}
 		else
 		{
