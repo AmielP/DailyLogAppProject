@@ -24,7 +24,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 //Need to update Java SDK
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -55,20 +54,15 @@ public class LogOverviewController extends LogOverviewTemplate
 	private String dailyLogPathDirectoryOfAmiel = "D:/Documents (D)/Daily Log";
 
 	//hard-coded path. may change later
-	private String dailyLogPathDirectoryOfBCT = "C:/Users/User/Desktop";
-
-	//hard-coded path. may change later
 	private String dailyLogPathDirectoryOfTest;
 
 	private String dailyLogFileOfAmiel;
 
-	private String dailyLogFileOfBCT;
+//	private String dailyLogFileOfBCT;
 
 	private String dailyLogFileOfTest;
 
 	private File fileOrFolderOfAmiel = new File(dailyLogPathDirectoryOfAmiel);
-
-	private File fileOrFolderOfBCT = new File(dailyLogPathDirectoryOfBCT);
 
 	private IAlert alert;
 
@@ -133,11 +127,6 @@ public class LogOverviewController extends LogOverviewTemplate
 		}
 	}
 
-//	private void printLogDummy()
-//	{
-//		System.out.println(log.getName() + "\n" + log.getDate() + "\n" + log.getSubject() + "\n" + log.getEntry());
-//	}
-
 	private void showLogDetails()
 	{
 		DateUtil.updateTime(dateLabel, DateUtil.getDatePattern(), DateUtil.getDateFormatter());
@@ -147,27 +136,21 @@ public class LogOverviewController extends LogOverviewTemplate
 	//Change determineExistingPath() to determineBytesOfData();
 	private void determineExistingPath()
 	{
-		dailyLogPathDirectoryOfTest = selectedDirectory.toString();
 		mostRecentTextFile = new FindMostRecentTextFile();
 		//		readTextFileUtil.getSourceFile().setBuffer(new byte[(int) fileOrFolderOfAmiel.length()]);
 
-		if(!fileOrFolderOfAmiel.exists() && fileOrFolderOfBCT.exists())
-		{
-			System.out.println("BCT's stuff");
-			dailyLogFileOfBCT = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfBCT);
-			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfBCT);
-			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
-		}
-		else if(!fileOrFolderOfBCT.exists() && fileOrFolderOfAmiel.exists())
+		if(fileOrFolderOfAmiel.exists())
 		{
 			System.out.println("Amiel's stuff");
 			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
 			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfAmiel);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
-		else if(!fileOrFolderOfBCT.exists() && !fileOrFolderOfAmiel.exists())
+		else
 		{
-//			System.out.println("The other guy's stuff");
+			chooseExistingPath();
+			
+			dailyLogPathDirectoryOfTest = selectedDirectory.toString();
 			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest); //Work on ifFileNotFoundInDirectory, then createFile
 			System.out.println("dailyLogFileOfTest " + dailyLogFileOfTest);
 			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
@@ -215,7 +198,6 @@ public class LogOverviewController extends LogOverviewTemplate
 	private void initialize()
 	{
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
-		chooseExistingPath();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
 		activatePaneOnDefaultRun(nameTextField);
@@ -263,11 +245,5 @@ public class LogOverviewController extends LogOverviewTemplate
 		List<Object> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
 		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
 		chooseFileToSave(linesOfEntry, file);
-	}
-
-	@FXML
-	private void handleOnClickReleaseSendLog()
-	{
-
 	}
 }
