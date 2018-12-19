@@ -15,7 +15,9 @@ Update 1.2.1:
 When hitting the "Send" button, you are always prompted to choose a directory in which to save the file.
 To continue opening the previous the log, be sure to only save the file in the same directory it was created.
 To create a new daily log chain, just save the log file in a different directory.
+
 DO NOT CHANGE THE NAME OF THE FILE WHEN SAVING!
+DO NOT DUPLICATE THE FILE WITH THE SAME NAME AS THE OTHER LOG FILES!
 
 Select any hard drive except C:, because access to the C: drive is denied.
 
