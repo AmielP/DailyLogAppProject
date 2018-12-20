@@ -17,6 +17,11 @@ Update 1.2.2:
 
 Update 1.2.3:
 - Added a "saved" message popup after users save their daily log.
+
+Update 1.2.4:
+- Bug fixes
+- User can now open and save files on any drive they wish. No longer are they restrained to the shackles of grief and 
+  separation.
   
 When hitting the "Send" button, you are always prompted to choose a directory in which to save the file.
 To continue opening the previous the log, be sure to only save the file in the same directory it was created.
@@ -26,9 +31,9 @@ DO NOT CHANGE THE NAME OF THE FILE WHEN SAVING!
 
 DO NOT DUPLICATE THE FILE WITH THE SAME NAME AS THE OTHER LOG FILES!
 
-DISCLAIMER: 
+~~DISCLAIMER: 
 
-You need at least 2 storage drives to make this work.
+~~You need at least 2 storage drives to make this work.
 Select any hard drive except C:, because access to the C: drive is denied.
 
 To run, type java -jar daily_log_app_vALPHA_X.jar in your command prompt or terminal and *not* by double-clicking the app (X means version).
