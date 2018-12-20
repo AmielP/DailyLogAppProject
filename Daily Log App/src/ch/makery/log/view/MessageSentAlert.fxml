@@ -11,7 +11,7 @@
    <children>
       <BorderPane layoutX="50.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <Label text="Prodigious!&#10;Your Message Has Been Sent" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <Label text="PRODIGIOUS!&#10;Your Message Has Been Sent" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Lucida Bright" size="49.0" />
                </font>
