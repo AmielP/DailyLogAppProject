@@ -3,7 +3,7 @@ package ch.makery.log;
 import java.io.IOException;
 
 import ch.makery.log.model.Log;
-import ch.makery.log.view.LogOverviewController;
+import ch.makery.log.model.LogOverviewTemplate;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,8 +76,8 @@ public class MainApp extends Application
 
 			rootLayout.setCenter(logOverview);
 
-			LogOverviewController controller = loader.getController();
-			controller.setMainApp(this);
+			LogOverviewTemplate template = loader.getController();
+			template.setMainApp(this);
 		}
 		catch(IOException e)
 		{

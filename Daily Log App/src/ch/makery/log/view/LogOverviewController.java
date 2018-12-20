@@ -2,10 +2,13 @@ package ch.makery.log.view;
 
 //import java.beans.EventHandler;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import ch.makery.log.MainApp;
 import ch.makery.log.model.Log;
 import ch.makery.log.model.LogOverviewTemplate;
 import ch.makery.log.model.SaveAndOpenFileOption;
@@ -19,11 +22,15 @@ import ch.makery.log.util.MatchLogContent;
 import ch.makery.log.util.ReadTextFileUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 //Need to update Java SDK
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 //Need to update Java SDK
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -42,7 +49,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private Label sendLabel;
 
-	private MainApp mainApp = new MainApp();
+//	private MainApp mainApp = new MainApp();
 
 	private ILogTemplate log = new Log();
 
@@ -113,7 +120,7 @@ public class LogOverviewController extends LogOverviewTemplate
 		final Label labelSelectedDirectory = new Label();
 
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		selectedDirectory = directoryChooser.showDialog(mainApp.getPrimaryStage());
+		selectedDirectory = directoryChooser.showDialog(getMainApp().getPrimaryStage());
 		
 		if(selectedDirectory == null)
 		{
@@ -182,11 +189,40 @@ public class LogOverviewController extends LogOverviewTemplate
 		
 		getSaveAndOpenFileOption().listFile(initialLogFileName, extensionLogFileName, extensionLogFileFilter);
 		
-		file = getSaveAndOpenFileOption().getFileChooser().showSaveDialog(mainApp.getPrimaryStage());
+		file = getSaveAndOpenFileOption().getFileChooser().showSaveDialog(getMainApp().getPrimaryStage());
 		
 		if(file != null)
 		{
 			getSaveAndOpenFileOption().saveFile(objectList, file);
+			
+			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageSentAlert.fxml"));
+			Scene newScene;
+			try
+			{
+				newScene = new Scene(loader.load());
+			}
+			catch(IOException e)
+			{
+				System.err.println(e);
+				System.out.println(e);
+				return;
+			}
+			
+			Stage messageSentAlertPopupStage = new Stage();
+			messageSentAlertPopupStage.setScene(newScene);
+			messageSentAlertPopupStage.initStyle(StageStyle.UNDECORATED);
+			messageSentAlertPopupStage.show();
+			
+			executor.submit(() -> Platform.runLater(messageSentAlertPopupStage::show));
+			executor.schedule(
+				    () -> Platform.runLater(() -> 
+				    ((Stage)messageSentAlertPopupStage.getScene().getWindow()).close())
+				    , 1
+				    , TimeUnit.SECONDS);
+			
+			executor.shutdown();
 		}
 	}
 	
@@ -212,10 +248,11 @@ public class LogOverviewController extends LogOverviewTemplate
 
 	}
 
-	public void setMainApp(MainApp mainApp)
-	{
-		this.mainApp = mainApp;
-	}
+	//Can choose to delete this later or not
+//	public void setMainApp(MainApp mainApp)
+//	{
+//		this.mainApp = mainApp;
+//	}
 
 	@FXML
 	private void handleDeleteLog()

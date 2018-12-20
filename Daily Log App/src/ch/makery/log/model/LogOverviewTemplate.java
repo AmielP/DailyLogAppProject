@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
+import ch.makery.log.MainApp;
+
 public abstract class LogOverviewTemplate 
 {
 	private InputFile sourceFile;
@@ -12,6 +14,12 @@ public abstract class LogOverviewTemplate
 	private FileInputStream logOverviewStream;
 	private SaveAndOpenFileOption saveAndOpenFileOption;
 	private byte[] logOverviewContent;
+	private MainApp mainApp;
+	
+	public LogOverviewTemplate()
+	{
+		mainApp = new MainApp();
+	}
 	
 	public void setSourceFile(InputFile sourceFile)
 	{
@@ -73,6 +81,16 @@ public abstract class LogOverviewTemplate
 	public SaveAndOpenFileOption getSaveAndOpenFileOption()
 	{
 		return saveAndOpenFileOption;
+	}
+	
+	public void setMainApp(MainApp mainApp)
+	{
+		this.mainApp = mainApp;
+	}
+	
+	public MainApp getMainApp()
+	{
+		return mainApp;
 	}
 	
 	public abstract void chooseFileToSave(List<Object> objectList, File file);

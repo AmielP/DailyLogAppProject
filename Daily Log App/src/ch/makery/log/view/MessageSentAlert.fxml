@@ -13,17 +13,10 @@
          <center>
             <Label text="Prodigious!&#10;Your Message Has Been Sent" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <font>
-                  <Font name="Pixel Digivolve" size="18.0" />
+                  <Font name="Lucida Bright" size="49.0" />
                </font>
             </Label>
          </center>
-         <bottom>
-            <Button mnemonicParsing="false" text="OK" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="20.0" />
-               </BorderPane.margin>
-            </Button>
-         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>
