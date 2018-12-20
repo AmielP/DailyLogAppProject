@@ -11,11 +11,17 @@ Update 1.2:
 Update 1.2.1:
 - Bug fixes
 - Users can now select the directory of their choice to create a new log or open an existing log in that directory.
+
+Update 1.2.2:
+- Deleted the ability to choose a directory as soon as the program runs for any of the users hard coded into the program.
   
 When hitting the "Send" button, you are always prompted to choose a directory in which to save the file.
 To continue opening the previous the log, be sure to only save the file in the same directory it was created.
 To create a new daily log chain, just save the log file in a different directory.
+
 DO NOT CHANGE THE NAME OF THE FILE WHEN SAVING!
+
+DO NOT DUPLICATE THE FILE WITH THE SAME NAME AS THE OTHER LOG FILES!
 
 Select any hard drive except C:, because access to the C: drive is denied.
 
