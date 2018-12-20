@@ -14,6 +14,9 @@ Update 1.2.1:
 
 Update 1.2.2:
 - Deleted the ability to choose a directory as soon as the program runs for any of the users hard coded into the program.
+
+Update 1.2.3:
+- Added a "saved" message popup after users save their daily log.
   
 When hitting the "Send" button, you are always prompted to choose a directory in which to save the file.
 To continue opening the previous the log, be sure to only save the file in the same directory it was created.
