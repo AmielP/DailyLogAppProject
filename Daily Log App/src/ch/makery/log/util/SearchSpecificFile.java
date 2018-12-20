@@ -70,7 +70,7 @@ public class SearchSpecificFile extends SearchSpecificFileOrFolder implements IS
 				//Non object-oriented design structure. FIX LATER MAYBE?
 				System.out.println("No log in directory. Creating temporary log file...\n");
 				List<String> lines = Arrays.asList("Name:", "Date:", "Subject:", "Entry:");
-				String newTextFileNameWithPath = str1 + str2 + "null" + str3;
+				String newTextFileNameWithPath = str1 + "/" + str2 + "null" + str3;
 				try 
 				{
 					setFolder(Paths.get(newTextFileNameWithPath));
