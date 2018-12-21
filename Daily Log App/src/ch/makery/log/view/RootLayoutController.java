@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.model.LogOverviewTemplate;
+import javafx.fxml.FXML;
 
 public class RootLayoutController extends LogOverviewTemplate
 {
@@ -18,5 +19,13 @@ public class RootLayoutController extends LogOverviewTemplate
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@FXML
+	private void handleNew()
+	{
+		getNameTextField().clear();
+		getSubjectTextField().clear();
+		getEntryTextArea().clear();
 	}
 }

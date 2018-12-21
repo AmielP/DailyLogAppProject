@@ -38,12 +38,12 @@ import javafx.scene.control.TextField;
 
 public class LogOverviewController extends LogOverviewTemplate
 {
-	@FXML
-	private TextField nameTextField;
-	@FXML
-	private TextField subjectTextField;
-	@FXML
-	private TextArea entryTextArea;
+//	@FXML
+//	private TextField nameTextField;
+//	@FXML
+//	private TextField subjectTextField;
+//	@FXML
+//	private TextArea entryTextArea;
 	@FXML
 	private Label dateLabel;
 	@FXML
@@ -105,9 +105,9 @@ public class LogOverviewController extends LogOverviewTemplate
 
 	private void setEachTextBoxWithContent(byte[] buffer)
 	{
-		nameTextField.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-		subjectTextField.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-		entryTextArea.setText(match.matchLogContent(buffer, "Entry:"));
+		getNameTextField().setText(match.matchLogContent(buffer, "Name: ", "Date:"));
+		getSubjectTextField().setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
+		getEntryTextArea().setText(match.matchLogContent(buffer, "Entry:"));
 	}
 
 	private void wrapTextArea(TextArea textArea)
@@ -236,11 +236,11 @@ public class LogOverviewController extends LogOverviewTemplate
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
-		activatePaneOnDefaultRun(nameTextField);
+		activatePaneOnDefaultRun(getNameTextField());
 
-		wrapTextArea(entryTextArea);
+		wrapTextArea(getEntryTextArea());
 
-		nameTextField.appendText("Amiel");
+		getNameTextField().appendText("Amiel");
 		showLogDetails();
 
 		determineExistingPath();
@@ -257,9 +257,9 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private void handleDeleteLog()
 	{
-		nameTextField.clear();
-		subjectTextField.clear();
-		entryTextArea.clear();
+		getNameTextField().clear();
+		getSubjectTextField().clear();
+		getEntryTextArea().clear();
 	}
 
 	@FXML
@@ -279,8 +279,8 @@ public class LogOverviewController extends LogOverviewTemplate
 
 		String contentText = "Please send to an existing directory";
 
-		List<Object> linesOfEntry = Arrays.asList("Name: " + nameTextField.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subjectTextField.getText(), "Entry:", entryTextArea.getText());
-		log.setLog(nameTextField.getText(), DateUtil.getZonedDateTime(), subjectTextField.getText(), entryTextArea.getText());
+		List<Object> linesOfEntry = Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText());
+		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
 		chooseFileToSave(linesOfEntry, file);
 	}
 }
