@@ -78,7 +78,7 @@ public class ReadTextFileUtil extends LogOverviewTemplate
 	}
 
 	@Override
-	public void chooseFileToSave(List<Object> objectList, File file) 
+	public void chooseFileToSaveOrOpen(List<Object> objectList, File file) 
 	{
 		// TODO Nothing
 	}

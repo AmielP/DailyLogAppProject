@@ -20,6 +20,10 @@ public abstract class LogOverviewTemplate
 	private byte[] logOverviewContent;
 	private MainApp mainApp;
 	
+	private static TextField nameTF;
+	private static TextField subjectTF;
+	private static TextArea entryTA;
+	
 	@FXML
 	private TextField nameTextField;
 	@FXML
@@ -30,6 +34,7 @@ public abstract class LogOverviewTemplate
 	public LogOverviewTemplate()
 	{
 		mainApp = new MainApp();
+		saveAndOpenFileOption = new SaveAndOpenFileOption();
 	}
 	
 	public void setSourceFile(InputFile sourceFile)
@@ -134,5 +139,35 @@ public abstract class LogOverviewTemplate
 		return entryTextArea;
 	}
 	
-	public abstract void chooseFileToSave(List<Object> objectList, File file);
+	public static void setNameTF(TextField nameTF)
+	{
+		LogOverviewTemplate.nameTF = nameTF;
+	}
+	
+	public static TextField getNameTF()
+	{
+		return nameTF;
+	}
+	
+	public static void setSubjectTF(TextField subjectTF)
+	{
+		LogOverviewTemplate.subjectTF = subjectTF;
+	}
+	
+	public static TextField getSubjectTF()
+	{
+		return subjectTF;
+	}
+	
+	public static void setEntryTA(TextArea entryTA)
+	{
+		LogOverviewTemplate.entryTA = entryTA;
+	}
+	
+	public static TextArea getEntryTA()
+	{
+		return entryTA;
+	}
+	
+	public abstract void chooseFileToSaveOrOpen(List<Object> objectList, File file);
 }

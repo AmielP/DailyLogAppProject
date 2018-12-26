@@ -1,6 +1,5 @@
 package ch.makery.log.view;
 
-//import java.beans.EventHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -38,18 +37,10 @@ import javafx.scene.control.TextField;
 
 public class LogOverviewController extends LogOverviewTemplate
 {
-//	@FXML
-//	private TextField nameTextField;
-//	@FXML
-//	private TextField subjectTextField;
-//	@FXML
-//	private TextArea entryTextArea;
 	@FXML
 	private Label dateLabel;
 	@FXML
 	private Label sendLabel;
-
-//	private MainApp mainApp = new MainApp();
 
 	private ILogTemplate log = new Log();
 
@@ -64,8 +55,6 @@ public class LogOverviewController extends LogOverviewTemplate
 	private String dailyLogPathDirectoryOfTest;
 
 	private String dailyLogFileOfAmiel;
-
-//	private String dailyLogFileOfBCT;
 
 	private String dailyLogFileOfTest;
 
@@ -83,9 +72,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	
 	private File file;
 	
-	File selectedDirectory;
-
-	//	private String newLine = System.getProperty("line.separator");
+	private File selectedDirectory;
 
 	public LogOverviewController()
 	{
@@ -181,11 +168,9 @@ public class LogOverviewController extends LogOverviewTemplate
 	}
 	
 	@Override
-	public void chooseFileToSave(List<Object> objectList, File file) 
+	public void chooseFileToSaveOrOpen(List<Object> objectList, File file) 
 	{
 		initialLogFileName = "Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry());
-		
-		setSaveAndOpenFileOption(new SaveAndOpenFileOption());
 		
 		getSaveAndOpenFileOption().listFile(initialLogFileName, extensionLogFileName, extensionLogFileFilter);
 		
@@ -233,6 +218,9 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private void initialize()
 	{
+		setNameTF(getNameTextField());
+		setSubjectTF(getSubjectTextField());
+		setEntryTA(getEntryTextArea());
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
@@ -247,12 +235,6 @@ public class LogOverviewController extends LogOverviewTemplate
 		//		System.out.println("Before the storm");
 
 	}
-
-	//Can choose to delete this later or not
-//	public void setMainApp(MainApp mainApp)
-//	{
-//		this.mainApp = mainApp;
-//	}
 
 	@FXML
 	private void handleDeleteLog()
@@ -281,6 +263,6 @@ public class LogOverviewController extends LogOverviewTemplate
 
 		List<Object> linesOfEntry = Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText());
 		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
-		chooseFileToSave(linesOfEntry, file);
+		chooseFileToSaveOrOpen(linesOfEntry, file);
 	}
 }

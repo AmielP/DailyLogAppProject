@@ -5,27 +5,29 @@ import java.util.List;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.model.LogOverviewTemplate;
+import ch.makery.log.view.LogOverviewController;
+import ch.makery.log.model.SaveAndOpenFileOption;
 import javafx.fxml.FXML;
+import javafx.stage.FileChooser;
 
 public class RootLayoutController extends LogOverviewTemplate
 {
 	public RootLayoutController()
 	{
-		setMainApp(new MainApp())
-;	}
+		setMainApp(new MainApp());
+	}
 
 	@Override
-	public void chooseFileToSave(List<Object> objectList, File file) 
+	public void chooseFileToSaveOrOpen(List<Object> objectList, File file) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	
 	@FXML
 	private void handleNew()
 	{
-		getNameTextField().clear();
-		getSubjectTextField().clear();
-		getEntryTextArea().clear();
+		getNameTF().clear();
+		getSubjectTF().clear();
+		getEntryTA().clear();
 	}
 }
