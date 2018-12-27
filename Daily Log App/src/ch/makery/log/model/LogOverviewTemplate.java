@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import ch.makery.log.MainApp;
+import ch.makery.log.services.IMatchContent;
+import ch.makery.log.util.MatchLogContent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -24,6 +26,12 @@ public abstract class LogOverviewTemplate
 	private static TextField subjectTF;
 	private static TextArea entryTA;
 	
+	private String initialLogFileName = "Entry_";
+	private String extensionLogFileName = "Text (*txt)";
+	private String extensionLogFileFilter = "*.txt";
+	
+	private IMatchContent match = new MatchLogContent();
+	
 	@FXML
 	private TextField nameTextField;
 	@FXML
@@ -35,6 +43,13 @@ public abstract class LogOverviewTemplate
 	{
 		mainApp = new MainApp();
 		saveAndOpenFileOption = new SaveAndOpenFileOption();
+	}
+	
+	public void setEachTextBoxWithContent(byte[] buffer)
+	{
+		nameTF.setText(match.matchLogContent(buffer, "Name: ", "Date:"));
+		subjectTF.setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
+		entryTA.setText(match.matchLogContent(buffer, "Entry:"));
 	}
 	
 	public void setSourceFile(InputFile sourceFile)
@@ -167,6 +182,26 @@ public abstract class LogOverviewTemplate
 	public static TextArea getEntryTA()
 	{
 		return entryTA;
+	}
+	
+	public void setInitialLogFileName(String initialLogFileName)
+	{
+		this.initialLogFileName = initialLogFileName;
+	}
+	
+	public String getInitialLogFileName()
+	{
+		return initialLogFileName;
+	}
+	
+	public String getExtensionLogFileName()
+	{
+		return extensionLogFileName;
+	}
+	
+	public String getExtensionLogFileFilter()
+	{
+		return extensionLogFileFilter;
 	}
 	
 	public abstract void chooseFileToSaveOrOpen(List<Object> objectList, File file);

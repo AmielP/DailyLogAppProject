@@ -44,8 +44,6 @@ public class LogOverviewController extends LogOverviewTemplate
 
 	private ILogTemplate log = new Log();
 
-	private IMatchContent match = new MatchLogContent();
-
 	private FindMostRecentFile mostRecentTextFile;
 
 	//hard-coded path. may change later.
@@ -63,12 +61,6 @@ public class LogOverviewController extends LogOverviewTemplate
 	private IAlert alert;
 
 	private LogOverviewTemplate readTextFileUtil = new ReadTextFileUtil();
-	
-	String initialLogFileName;
-	
-	private String extensionLogFileName = "Text (*txt)";
-	
-	private String extensionLogFileFilter = "*.txt";
 	
 	private File file;
 	
@@ -88,13 +80,6 @@ public class LogOverviewController extends LogOverviewTemplate
 				((Node) pane).requestFocus();
 			}
 		});
-	}
-
-	private void setEachTextBoxWithContent(byte[] buffer)
-	{
-		getNameTextField().setText(match.matchLogContent(buffer, "Name: ", "Date:"));
-		getSubjectTextField().setText(match.matchLogContent(buffer, "Subject: ", "Entry:"));
-		getEntryTextArea().setText(match.matchLogContent(buffer, "Entry:"));
 	}
 
 	private void wrapTextArea(TextArea textArea)
@@ -170,9 +155,9 @@ public class LogOverviewController extends LogOverviewTemplate
 	@Override
 	public void chooseFileToSaveOrOpen(List<Object> objectList, File file) 
 	{
-		initialLogFileName = "Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry());
+		setInitialLogFileName("Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()));
 		
-		getSaveAndOpenFileOption().listFile(initialLogFileName, extensionLogFileName, extensionLogFileFilter);
+		getSaveAndOpenFileOption().listFile(getInitialLogFileName(), getExtensionLogFileName(), getExtensionLogFileFilter());
 		
 		file = getSaveAndOpenFileOption().getFileChooser().showSaveDialog(getMainApp().getPrimaryStage());
 		
