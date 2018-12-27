@@ -31,7 +31,7 @@ public class RootLayoutController extends LogOverviewTemplate
 		setSourceFile(new InputFile());
 		setSaveAndOpenFileOption(new SaveAndOpenFileOption());
 		getSaveAndOpenFileOption().setFileChooser(new FileChooser());
-		getSaveAndOpenFileOption().listFile(getInitialLogFileName(), getExtensionLogFileName(), getExtensionLogFileFilter());
+		listFile(getInitialLogFileName(), getExtensionLogFileName(), getExtensionLogFileFilter());
 		
 		showOpenDialog = getSaveAndOpenFileOption().getFileChooser().showOpenDialog(getMainApp().getPrimaryStage());
 		

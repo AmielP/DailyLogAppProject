@@ -5,14 +5,16 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import ch.makery.log.MainApp;
+import ch.makery.log.services.IFindExtension;
 import ch.makery.log.services.IMatchContent;
 import ch.makery.log.util.MatchLogContent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
-public abstract class LogOverviewTemplate 
+public abstract class LogOverviewTemplate implements IFindExtension
 {
 	private InputFile sourceFile;
 	private OutputFile destinationFile;
@@ -202,6 +204,18 @@ public abstract class LogOverviewTemplate
 	public String getExtensionLogFileFilter()
 	{
 		return extensionLogFileFilter;
+	}
+	
+	@Override
+	public void listFile(String initialName, String primaryExtensionName, String primaryExtensionFilter)
+	{
+		setSaveAndOpenFileOption(new SaveAndOpenFileOption());
+		
+		getSaveAndOpenFileOption().getFileChooser().setInitialFileName(initialName);
+		
+		FileChooser.ExtensionFilter extensionFilter1;
+		extensionFilter1 = new FileChooser.ExtensionFilter(primaryExtensionName, primaryExtensionFilter);
+		getSaveAndOpenFileOption().getFileChooser().getExtensionFilters().addAll(extensionFilter1);
 	}
 	
 	public abstract void chooseFileToSaveOrOpen(List<Object> objectList, File file);
