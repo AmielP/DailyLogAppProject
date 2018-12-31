@@ -19,7 +19,8 @@ public class RootLayoutController extends LogOverviewTemplate
 {	
 	private File showOpenDialog;
 	private FileInputStream fileInputStream;
-	
+	private byte[] bytesArray;
+
 	public RootLayoutController()
 	{
 		setMainApp(new MainApp());
@@ -32,14 +33,14 @@ public class RootLayoutController extends LogOverviewTemplate
 		setSaveAndOpenFileOption(new SaveAndOpenFileOption());
 		getSaveAndOpenFileOption().setFileChooser(new FileChooser());
 		listFile(getInitialLogFileName(), getExtensionLogFileName(), getExtensionLogFileFilter());
-		
+
 		showOpenDialog = getSaveAndOpenFileOption().getFileChooser().showOpenDialog(getMainApp().getPrimaryStage());
-		
+
 		try 
 		{
 			getSourceFile().setBuffer(new byte[(int) showOpenDialog.length()]);
-			byte[] bytesArray = getSourceFile().getBuffer();
-			
+			bytesArray = getSourceFile().getBuffer();
+
 			getSourceFile().setFunction(new FileInputStream(showOpenDialog));
 			fileInputStream = (FileInputStream) getSourceFile().getFunction();
 			fileInputStream.read(bytesArray);
@@ -67,7 +68,7 @@ public class RootLayoutController extends LogOverviewTemplate
 			System.err.close();
 		}
 	}
-	
+
 	@FXML
 	private void handleNew()
 	{
@@ -75,10 +76,42 @@ public class RootLayoutController extends LogOverviewTemplate
 		getSubjectTF().clear();
 		getEntryTA().clear();
 	}
-	
+
 	@FXML
 	private void handleOpen()
 	{
 		chooseFileToSaveOrOpen(null, null);
+	}
+
+	@FXML
+	private void handleSave()
+	{
+		File filePath = getFilePathOfInitialChosenDirectory();
+//		System.out.println("\nfilePath: " + filePath);
+		System.out.println("lOE: " + getLOE());
+		
+		if(filePath != null)
+		{
+//			getSaveAndOpenFileOption().saveFile(getLOE(), filePath);
+//			for(int i = 0; i < bytesArray.length; i++)
+//			{
+//				System.out.print((char)bytesArray[i]);
+//			}
+			
+			
+			//HANDLE THE SAVE FUNCTION BY SAVING TO THE INITIALLY OPENED DIRECTORY
+			
+			System.out.println("In here");
+		}
+		else
+		{
+			handleSaveAs();
+		}
+	}
+	
+	@FXML
+	private void handleSaveAs()
+	{
+		
 	}
 }

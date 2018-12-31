@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import ch.makery.log.model.Log;
 import ch.makery.log.model.LogOverviewTemplate;
+import ch.makery.log.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,9 @@ public class MainApp extends Application
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			RootLayoutController rootLayoutController = loader.getController();
+			rootLayoutController.setMainApp(this);
 		}
 		catch(IOException e)
 		{

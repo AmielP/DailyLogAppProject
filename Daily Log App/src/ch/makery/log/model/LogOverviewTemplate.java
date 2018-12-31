@@ -27,12 +27,14 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	private static TextField nameTF;
 	private static TextField subjectTF;
 	private static TextArea entryTA;
+	private static List<Object> lOE;
 	
 	private String initialLogFileName = "Entry_";
 	private String extensionLogFileName = "Text (*txt)";
 	private String extensionLogFileFilter = "*.txt";
 	
 	private IMatchContent match = new MatchLogContent();
+	private static File filePathOfInitialChosenDirectory;
 	
 	@FXML
 	private TextField nameTextField;
@@ -184,6 +186,26 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	public static TextArea getEntryTA()
 	{
 		return entryTA;
+	}
+	
+	public static void setLOE(List<Object> lOE)
+	{
+		LogOverviewTemplate.lOE = lOE;
+	}
+	
+	public static List<Object> getLOE()
+	{
+		return lOE;
+	}
+	
+	public static void setFilePathOfInitialChosenDirectory(File filePathOfInitialChosenDirectory)
+	{
+		LogOverviewTemplate.filePathOfInitialChosenDirectory = filePathOfInitialChosenDirectory;
+	}
+	
+	public static File getFilePathOfInitialChosenDirectory()
+	{
+		return filePathOfInitialChosenDirectory;
 	}
 	
 	public void setInitialLogFileName(String initialLogFileName)

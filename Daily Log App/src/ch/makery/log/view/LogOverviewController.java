@@ -65,6 +65,8 @@ public class LogOverviewController extends LogOverviewTemplate
 	private File file;
 	
 	private File selectedDirectory;
+	
+	private List<Object> linesOfEntry;
 
 	public LogOverviewController()
 	{
@@ -103,6 +105,7 @@ public class LogOverviewController extends LogOverviewTemplate
 		else
 		{
 			labelSelectedDirectory.setText(selectedDirectory.getAbsolutePath());
+			setFilePathOfInitialChosenDirectory(selectedDirectory);
 		}
 	}
 
@@ -206,6 +209,8 @@ public class LogOverviewController extends LogOverviewTemplate
 		setNameTF(getNameTextField());
 		setSubjectTF(getSubjectTextField());
 		setEntryTA(getEntryTextArea());
+		
+		setLOE(linesOfEntry);
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
@@ -217,6 +222,10 @@ public class LogOverviewController extends LogOverviewTemplate
 		showLogDetails();
 
 		determineExistingPath();
+		
+		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
+		
+		System.out.println("Name: " + log.getName() + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry() + "\nDate: " + log.getDate());
 		//		System.out.println("Before the storm");
 
 	}
@@ -246,8 +255,8 @@ public class LogOverviewController extends LogOverviewTemplate
 
 		String contentText = "Please send to an existing directory";
 
-		List<Object> linesOfEntry = Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText());
-		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
+		linesOfEntry = Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText());
+//		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
 		chooseFileToSaveOrOpen(linesOfEntry, file);
 	}
 }
