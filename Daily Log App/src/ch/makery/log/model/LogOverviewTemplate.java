@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.makery.log.MainApp;
 import ch.makery.log.services.IFindExtension;
+import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
 import ch.makery.log.util.MatchLogContent;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.stage.FileChooser;
 
 public abstract class LogOverviewTemplate implements IFindExtension
 {
+	private ILogTemplate log = new Log();
+	
 	private InputFile sourceFile;
 	private OutputFile destinationFile;
 	private PrimaryStage primStage;
@@ -27,11 +30,14 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	private static TextField nameTF;
 	private static TextField subjectTF;
 	private static TextArea entryTA;
+	
+	private static Log l;
 	private static List<Object> lOE;
 	
 	private String initialLogFileName = "Entry_";
 	private String extensionLogFileName = "Text (*txt)";
 	private String extensionLogFileFilter = "*.txt";
+	private List<Object> linesOfEntry;
 	
 	private IMatchContent match = new MatchLogContent();
 	private static File filePathOfInitialChosenDirectory;
@@ -226,6 +232,36 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	public String getExtensionLogFileFilter()
 	{
 		return extensionLogFileFilter;
+	}
+	
+	public void setLog(ILogTemplate log)
+	{
+		this.log = log;
+	}
+	
+	public ILogTemplate getLog()
+	{
+		return log;
+	}
+	
+	public static void setL(Log l)
+	{
+		LogOverviewTemplate.l = l;
+	}
+	
+	public static Log getL()
+	{
+		return l;
+	}
+	
+	public void setLinesOfEntry(List<Object> linesOfEntry)
+	{
+		this.linesOfEntry = linesOfEntry;
+	}
+	
+	public List<Object> getLinesOfEntry()
+	{
+		return linesOfEntry;
 	}
 	
 	@Override

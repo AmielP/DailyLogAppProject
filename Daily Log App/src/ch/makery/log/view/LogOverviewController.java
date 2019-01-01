@@ -42,7 +42,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private Label sendLabel;
 
-	private ILogTemplate log = new Log();
+//	private ILogTemplate log = new Log();
 
 	private FindMostRecentFile mostRecentTextFile;
 
@@ -65,8 +65,6 @@ public class LogOverviewController extends LogOverviewTemplate
 	private File file;
 	
 	private File selectedDirectory;
-	
-	private List<Object> linesOfEntry;
 
 	public LogOverviewController()
 	{
@@ -133,7 +131,7 @@ public class LogOverviewController extends LogOverviewTemplate
 			chooseExistingPath();
 			
 			dailyLogPathDirectoryOfTest = selectedDirectory.toString();
-			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest); //Work on ifFileNotFoundInDirectory, then createFile
+			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest); 
 			System.out.println("dailyLogFileOfTest " + dailyLogFileOfTest);
 			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
@@ -206,11 +204,13 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private void initialize()
 	{
+		setLog(new Log());
+		
 		setNameTF(getNameTextField());
 		setSubjectTF(getSubjectTextField());
 		setEntryTA(getEntryTextArea());
 		
-		setLOE(linesOfEntry);
+		setLOE(getLinesOfEntry());
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
@@ -223,9 +223,9 @@ public class LogOverviewController extends LogOverviewTemplate
 
 		determineExistingPath();
 		
-		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
-		
-		System.out.println("Name: " + log.getName() + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry() + "\nDate: " + log.getDate());
+		getLog().setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
+		setL((Log) getLog());
+//		System.out.println("\nName: " + log.getName() + "\nDate: " + DateUtil.format(log.getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry());
 		//		System.out.println("Before the storm");
 
 	}
@@ -255,8 +255,8 @@ public class LogOverviewController extends LogOverviewTemplate
 
 		String contentText = "Please send to an existing directory";
 
-		linesOfEntry = Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText());
+		setLinesOfEntry(Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText()));
 //		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
-		chooseFileToSaveOrOpen(linesOfEntry, file);
+		chooseFileToSaveOrOpen(getLinesOfEntry(), file);
 	}
 }

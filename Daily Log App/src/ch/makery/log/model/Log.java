@@ -26,11 +26,11 @@ public class Log implements ILogTemplate
 	
 	public Log(String name)
 	{
-		this.name = new SimpleStringProperty(name);
+		this.name = new SimpleStringProperty("User");
 		
 		this.date = new SimpleObjectProperty<ZonedDateTime>(ZonedDateTime.now());
-		this.subject = new SimpleStringProperty("My Birthday Surprise");
-		this.entry = new SimpleStringProperty("My brother got me a big pinata to eat.");
+		this.subject = new SimpleStringProperty("Default Subject Content");
+		this.entry = new SimpleStringProperty("Default Entry Content. Lorem ipsum dolores on the radio.");
 	}
 	
 	@Override
