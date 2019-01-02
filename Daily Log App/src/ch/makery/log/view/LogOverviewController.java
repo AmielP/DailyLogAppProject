@@ -132,6 +132,8 @@ public class LogOverviewController extends LogOverviewTemplate
 			
 			dailyLogPathDirectoryOfTest = selectedDirectory.toString();
 			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest); 
+			file = new File(dailyLogFileOfTest);
+			setSavedFileState(file);
 			System.out.println("dailyLogFileOfTest " + dailyLogFileOfTest);
 			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
@@ -197,6 +199,11 @@ public class LogOverviewController extends LogOverviewTemplate
 		}
 	}
 	
+	public void saveAs(List<Object> objectList, File file)
+	{
+		chooseFileToSaveOrOpen(objectList, file);
+	}
+	
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
 	//or if user has entered data to an existing text file; upon which,
@@ -209,8 +216,6 @@ public class LogOverviewController extends LogOverviewTemplate
 		setNameTF(getNameTextField());
 		setSubjectTF(getSubjectTextField());
 		setEntryTA(getEntryTextArea());
-		
-		setLOE(getLinesOfEntry());
 		//		findMostRecentTextFile = new FindMostRecentTextFile();// = new FindMostRecentFile();
 		//Do Something with this
 		//		findMostRecentTextFile.setTest(new FindMostRecentTextFile(dailyLogPathDirectoryOfAmiel));//Erase: .setSearchFileOrFolder(new FindMostRecentTextFile());
@@ -225,6 +230,9 @@ public class LogOverviewController extends LogOverviewTemplate
 		
 		getLog().setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
 		setL((Log) getLog());
+		setLinesOfEntry(Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText()));
+		setLOE(getLinesOfEntry());
+		System.out.println("\ngetLOE() in initialize: " + getLOE());
 //		System.out.println("\nName: " + log.getName() + "\nDate: " + DateUtil.format(log.getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry());
 		//		System.out.println("Before the storm");
 

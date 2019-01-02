@@ -20,10 +20,11 @@ import javafx.stage.FileChooser;
 
 public class RootLayoutController extends LogOverviewTemplate
 {	
-	private File filePath;
+	private File file;
 	private File showOpenDialog;
 	private FileInputStream fileInputStream;
 	private byte[] bytesArray;
+	private LogOverviewController logOverviewController;
 
 	public RootLayoutController()
 	{
@@ -39,6 +40,7 @@ public class RootLayoutController extends LogOverviewTemplate
 		listFile(getInitialLogFileName(), getExtensionLogFileName(), getExtensionLogFileFilter());
 
 		showOpenDialog = getSaveAndOpenFileOption().getFileChooser().showOpenDialog(getMainApp().getPrimaryStage());
+		setSavedFileState(showOpenDialog);
 
 		try 
 		{
@@ -70,6 +72,13 @@ public class RootLayoutController extends LogOverviewTemplate
 			System.err.close();
 		}
 	}
+	
+	private void setLOEToLinesOfEntry()
+	{
+		setLinesOfEntry(Arrays.asList("Name: " + getNameTF().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTF().getText(), "Entry:", getEntryTA().getText()));
+		setLOE(getLinesOfEntry());
+		System.out.println("\ngetLOE(): " + getLOE());
+	}
 
 	@FXML
 	private void handleNew()
@@ -85,31 +94,63 @@ public class RootLayoutController extends LogOverviewTemplate
 		chooseFileToSaveOrOpen(null, null);
 		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
 		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
+		setLOEToLinesOfEntry();
 	}
 
 	@FXML
-	private void handleSave() //MAKE handleSave() the same as handleSaveAs() so switch the function signatures and make them both saveAs functions because I am getting accessDenied
+	private void handleSave()
 	{
-		filePath = getFilePathOfInitialChosenDirectory();
-//		File file = showOpenDialog;
-		System.out.println("\nfilePath: " + filePath);
-		System.out.println("\nName: " + getL().getName() + "\nDate: " + DateUtil.format(getL().getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + getL().getSubject() + "\nEntry:\n" + getL().getEntry());
+//		dailyLogPathDirectoryOfTest = selectedDirectory.toString();
+//		((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
+//		setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		
-		if(filePath != null)
+		System.out.println("savedFileState: " + getSavedFileState());
+//		System.out.println("showOpenDialog: " + savedFileState);
+		try 
 		{
-			setLinesOfEntry(Arrays.asList("Name: " + getNameTF().getText(), "Date: " + DateUtil.format(getL().getDate(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTF().getText(), "Entry:", getEntryTA().getText()));
-			getSaveAndOpenFileOption().saveFile(getLinesOfEntry(), filePath);
-			
-			System.out.println("filePath exists");
-		}
-		else
+			getSourceFile().setBuffer(new byte[(int) getSavedFileState().length()]);
+			bytesArray = getSourceFile().getBuffer();
+
+			getSourceFile().setFunction(new FileInputStream(getSavedFileState()));
+			fileInputStream = (FileInputStream) getSourceFile().getFunction();
+			fileInputStream.read(bytesArray);
+			System.out.println("\n");
+			for(int i = 0; i < bytesArray.length; i++)
+			{
+				System.out.print((char)bytesArray[i]);
+			}
+			setEachTextBoxWithContent(bytesArray);
+			System.out.println("\n" + bytesArray.length + " byte(s) of data\n");
+			fileInputStream.close();
+		} 
+		catch (FileNotFoundException e) 
 		{
-			handleSaveAs();
+			e.printStackTrace();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
 		}
+		catch (Exception e)
+		{
+			System.err.close();
+		}
+		
+		setLOEToLinesOfEntry();
+		
+		logOverviewController = new LogOverviewController();
+		
+		logOverviewController.saveAs(getLOE(), file);
 	}
 	
 	@FXML
 	private void handleSaveAs()
+	{
+		handleSave();
+	}
+	
+	@FXML
+	private void handleExit()
 	{
 		
 	}

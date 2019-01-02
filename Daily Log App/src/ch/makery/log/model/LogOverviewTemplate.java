@@ -9,6 +9,7 @@ import ch.makery.log.services.IFindExtension;
 import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
 import ch.makery.log.util.MatchLogContent;
+import ch.makery.log.view.RootLayoutController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -33,6 +34,7 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	
 	private static Log l;
 	private static List<Object> lOE;
+	private static File savedFileState;
 	
 	private String initialLogFileName = "Entry_";
 	private String extensionLogFileName = "Text (*txt)";
@@ -262,6 +264,16 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	public List<Object> getLinesOfEntry()
 	{
 		return linesOfEntry;
+	}
+	
+	public static void setSavedFileState(File savedFileState)
+	{
+		LogOverviewTemplate.savedFileState = savedFileState;
+	}
+	
+	public static File getSavedFileState()
+	{
+		return savedFileState;
 	}
 	
 	@Override
