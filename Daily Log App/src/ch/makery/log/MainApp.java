@@ -11,6 +11,7 @@ import ch.makery.log.model.Log;
 import ch.makery.log.model.LogOverviewTemplate;
 import ch.makery.log.model.SaveAndOpenFileOption;
 import ch.makery.log.util.SavingUserPreferences;
+import ch.makery.log.view.LogOverviewController;
 import ch.makery.log.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,6 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 //import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +31,7 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	LogOverviewController logOverviewController;
 //	private SaveAndOpenFileOption saveFile;
 //	private SavingUserPreferences savingUserPreferences;
 	//	private Label dateLabel = new Label("message1");
@@ -41,66 +45,6 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 		logData.add(new Log("Vivien Leigh"));
 		logData.add(new Log("Nicole Standford"));
 	}
-	
-//	public void loadLogDataFromFile(File file)
-//	{
-//		savingUserPreferences = new SavingUserPreferences();
-//		
-//		try
-//		{
-//			JAXBContext context = JAXBContext.newInstance(LogListWrapper.class);
-//			Unmarshaller unmarshaller = context.createUnmarshaller();
-//			
-//			LogListWrapper logListWrapper = (LogListWrapper) unmarshaller.unmarshal(file);
-//			
-//			logData.clear();
-//			logData.addAll(logListWrapper.getLogs());
-//			
-//			savingUserPreferences.setLogFilePath(file);
-//		}
-//		catch(Exception e)
-//		{
-//			Alert alert = new Alert(AlertType.ERROR);
-//	        alert.setTitle("Error");
-//	        alert.setHeaderText("Could not load data");
-//	        alert.setContentText("Could not load data from file:\n" + file.getPath());
-//
-//	        alert.showAndWait();
-//	    }
-//	}
-	
-//	public void saveLogDataToFile(File file) 
-//	{
-//		savingUserPreferences = new SavingUserPreferences();
-//		
-//	    try 
-//	    {
-//	        JAXBContext context = JAXBContext
-//	                .newInstance(LogListWrapper.class);
-//	        Marshaller m = context.createMarshaller();
-//	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//
-//	        // Wrapping our person data.
-//	        LogListWrapper wrapper = new LogListWrapper();
-//	        wrapper.setLogs(logData);
-//
-//	        // Marshalling and saving XML to the file.
-//	        m.marshal(wrapper, file);
-//
-//	        // Save the file path to the registry.
-//	        savingUserPreferences.setLogFilePath(file);
-//	    } 
-//	    catch (Exception e) 
-//	    { 
-//	    	// catches ANY exception
-//	        Alert alert = new Alert(AlertType.ERROR);
-//	        alert.setTitle("Error");
-//	        alert.setHeaderText("Could not save data");
-//	        alert.setContentText("Could not save data to file:\n" + file.getPath());
-//
-//	        alert.showAndWait();
-//	    }
-//	}
 
 	public ObservableList<Log> getLogData()
 	{
@@ -163,6 +107,22 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 			rootLayout.setCenter(logOverview);
 
 			LogOverviewTemplate template = loader.getController();
+			
+			logOverviewController = (LogOverviewController) template;
+			
+			rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, new javafx.event.EventHandler<KeyEvent>()
+			{
+
+				@Override
+				public void handle(KeyEvent keyEvent) 
+				{
+					if((keyEvent.getCode() == KeyCode.S && keyEvent.isControlDown()) || (keyEvent.getCode() == KeyCode.S && keyEvent.isShiftDown() && keyEvent.isControlDown()))
+					{
+						logOverviewController.handleSave();
+					}
+				}
+				
+			});
 			template.setMainApp(this);
 		}
 		catch(IOException e)

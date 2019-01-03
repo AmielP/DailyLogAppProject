@@ -34,6 +34,8 @@ import javafx.stage.StageStyle;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class LogOverviewController extends LogOverviewTemplate
 {
@@ -42,7 +44,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	@FXML
 	private Label sendLabel;
 
-//	private ILogTemplate log = new Log();
+	//	private ILogTemplate log = new Log();
 
 	private FindMostRecentFile mostRecentTextFile;
 
@@ -61,9 +63,9 @@ public class LogOverviewController extends LogOverviewTemplate
 	private IAlert alert;
 
 	private LogOverviewTemplate readTextFileUtil = new ReadTextFileUtil();
-	
+
 	private File file;
-	
+
 	private File selectedDirectory;
 
 	public LogOverviewController()
@@ -86,14 +88,14 @@ public class LogOverviewController extends LogOverviewTemplate
 	{
 		textArea.setWrapText(true);
 	}
-	
+
 	private void chooseExistingPath()
 	{
 		final Label labelSelectedDirectory = new Label();
 
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		selectedDirectory = directoryChooser.showDialog(getMainApp().getPrimaryStage());
-		
+
 		if(selectedDirectory == null)
 		{
 			labelSelectedDirectory.setText("No Directory Selected");
@@ -129,7 +131,7 @@ public class LogOverviewController extends LogOverviewTemplate
 		else
 		{
 			chooseExistingPath();
-			
+
 			dailyLogPathDirectoryOfTest = selectedDirectory.toString();
 			dailyLogFileOfTest = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfTest); 
 			file = new File(dailyLogFileOfTest);
@@ -154,22 +156,22 @@ public class LogOverviewController extends LogOverviewTemplate
 		}
 		System.out.print(" of data");
 	}
-	
+
 	@Override
 	public void chooseFileToSaveOrOpen(List<Object> objectList, File file) 
 	{
 		setInitialLogFileName("Entry_" + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterEntry()));
-		
+
 		getSaveAndOpenFileOption().listFile(getInitialLogFileName(), getExtensionLogFileName(), getExtensionLogFileFilter());
-		
+
 		file = getSaveAndOpenFileOption().getFileChooser().showSaveDialog(getMainApp().getPrimaryStage());
-		
+
 		if(file != null)
 		{
 			getSaveAndOpenFileOption().saveFile(objectList, file);
-			
+
 			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-			
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageSentAlert.fxml"));
 			Scene newScene;
 			try
@@ -182,28 +184,28 @@ public class LogOverviewController extends LogOverviewTemplate
 				System.out.println(e);
 				return;
 			}
-			
+
 			Stage messageSentAlertPopupStage = new Stage();
 			messageSentAlertPopupStage.setScene(newScene);
 			messageSentAlertPopupStage.initStyle(StageStyle.UNDECORATED);
 			messageSentAlertPopupStage.show();
-			
+
 			executor.submit(() -> Platform.runLater(messageSentAlertPopupStage::show));
 			executor.schedule(
-				    () -> Platform.runLater(() -> 
-				    ((Stage)messageSentAlertPopupStage.getScene().getWindow()).close())
-				    , 1
-				    , TimeUnit.SECONDS);
-			
+					() -> Platform.runLater(() -> 
+					((Stage)messageSentAlertPopupStage.getScene().getWindow()).close())
+					, 1
+					, TimeUnit.SECONDS);
+
 			executor.shutdown();
 		}
 	}
-	
+
 	public void saveAs(List<Object> objectList, File file)
 	{
 		chooseFileToSaveOrOpen(objectList, file);
 	}
-	
+
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
 	//or if user has entered data to an existing text file; upon which,
@@ -212,7 +214,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	private void initialize()
 	{
 		setLog(new Log());
-		
+
 		setNameTF(getNameTextField());
 		setSubjectTF(getSubjectTextField());
 		setEntryTA(getEntryTextArea());
@@ -227,13 +229,13 @@ public class LogOverviewController extends LogOverviewTemplate
 		showLogDetails();
 
 		determineExistingPath();
-		
+
 		getLog().setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
 		setL((Log) getLog());
 		setLinesOfEntry(Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText()));
 		setLOE(getLinesOfEntry());
 		System.out.println("\ngetLOE() in initialize: " + getLOE());
-//		System.out.println("\nName: " + log.getName() + "\nDate: " + DateUtil.format(log.getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry());
+		//		System.out.println("\nName: " + log.getName() + "\nDate: " + DateUtil.format(log.getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry());
 		//		System.out.println("Before the storm");
 
 	}
@@ -256,7 +258,7 @@ public class LogOverviewController extends LogOverviewTemplate
 	private void handleSendLog()
 	{
 		//add alert to error check and make sure if folder doesn't exist that the error is handled properly.
-		
+
 		String title = "Warning";
 
 		String headerText = "Attempting to access non-existent path: " + dailyLogPathDirectoryOfAmiel;
@@ -264,7 +266,12 @@ public class LogOverviewController extends LogOverviewTemplate
 		String contentText = "Please send to an existing directory";
 
 		setLinesOfEntry(Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText()));
-//		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
+		//		log.setLog(getNameTextField().getText(), DateUtil.getZonedDateTime(), getSubjectTextField().getText(), getEntryTextArea().getText());
 		chooseFileToSaveOrOpen(getLinesOfEntry(), file);
+	}
+
+	public void handleSave()
+	{
+		handleSendLog();
 	}
 }

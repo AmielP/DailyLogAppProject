@@ -16,18 +16,6 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-              <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open...">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-              <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-              <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save As...">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-                     </accelerator></MenuItem>
               <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="ESCAPE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

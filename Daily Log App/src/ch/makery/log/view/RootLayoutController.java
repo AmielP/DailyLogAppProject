@@ -23,7 +23,6 @@ import javafx.stage.FileChooser;
 
 public class RootLayoutController extends LogOverviewTemplate
 {	
-	private File file;
 	private File showOpenDialog;
 	private FileInputStream fileInputStream;
 	private byte[] bytesArray;
@@ -76,13 +75,14 @@ public class RootLayoutController extends LogOverviewTemplate
 		}
 	}
 	
-	private void setLOEToLinesOfEntry()
-	{
-		setLinesOfEntry(Arrays.asList("Name: " + getNameTF().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTF().getText(), "Entry:", getEntryTA().getText()));
-		System.out.println("\nNAMETF: " + getNameTF().getText() + "\nSUBJECTTF: " + getSubjectTF().getText() + "\nENTRYTA: " + getEntryTA().getText());
-		setLOE(getLinesOfEntry());
-		System.out.println("\ngetLOE(): " + getLOE());
-	}
+	//DELETE WHEN I CAN
+//	private void setLOEToLinesOfEntry()
+//	{
+//		setLinesOfEntry(Arrays.asList("Name: " + getNameTF().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTF().getText(), "Entry:", getEntryTA().getText()));
+//		System.out.println("\nNAMETF: " + getNameTF().getText() + "\nSUBJECTTF: " + getSubjectTF().getText() + "\nENTRYTA: " + getEntryTA().getText());
+//		setLOE(getLinesOfEntry());
+//		System.out.println("\ngetLOE(): " + getLOE());
+//	}
 
 	public void setLogOverviewController(LogOverviewController logOverviewController)
 	{
@@ -100,15 +100,10 @@ public class RootLayoutController extends LogOverviewTemplate
 		getNameTF().clear();
 		getSubjectTF().clear();
 		getEntryTA().clear();
-	}
-
-	@FXML
-	private void handleOpen()
-	{
+		
 		chooseFileToSaveOrOpen(null, null);
 		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
-		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
-		setLOEToLinesOfEntry();
+//		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
 	}
 	
 	@FXML
