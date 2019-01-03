@@ -27,6 +27,7 @@ import javafx.scene.Scene;
 //Need to update Java SDK
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -201,10 +202,10 @@ public class LogOverviewController extends LogOverviewTemplate
 		}
 	}
 
-	public void saveAs(List<Object> objectList, File file)
-	{
-		chooseFileToSaveOrOpen(objectList, file);
-	}
+//	public void saveAs(List<Object> objectList, File file)
+//	{
+//		chooseFileToSaveOrOpen(objectList, file);
+//	}
 
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
@@ -270,8 +271,15 @@ public class LogOverviewController extends LogOverviewTemplate
 		chooseFileToSaveOrOpen(getLinesOfEntry(), file);
 	}
 
+	//Pseudo FXML eventHandler
 	public void handleSave()
 	{
 		handleSendLog();
+	}
+	
+	//Pseudo FXML eventHandler
+	public void handleExit()
+	{
+		handleCancelLog();
 	}
 }

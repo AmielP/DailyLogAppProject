@@ -15,6 +15,7 @@ import ch.makery.log.view.LogOverviewController;
 import ch.makery.log.model.SaveAndOpenFileOption;
 import ch.makery.log.util.DateUtil;
 import ch.makery.log.util.ReadTextFileUtil;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
@@ -30,7 +31,7 @@ public class RootLayoutController extends LogOverviewTemplate
 
 	public RootLayoutController()
 	{
-		setLog(new Log());
+//		setLog(new Log());
 	}
 
 	@Override
@@ -104,11 +105,5 @@ public class RootLayoutController extends LogOverviewTemplate
 		chooseFileToSaveOrOpen(null, null);
 		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
 //		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
-	}
-	
-	@FXML
-	private void handleExit()
-	{
-		
 	}
 }

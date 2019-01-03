@@ -21,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 //import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +33,7 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private Scene scene;
 	LogOverviewController logOverviewController;
 //	private SaveAndOpenFileOption saveFile;
 //	private SavingUserPreferences savingUserPreferences;
@@ -74,7 +77,7 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane)loader.load();
 
-			Scene scene = new Scene(rootLayout);
+			scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setMinWidth(400);
@@ -110,19 +113,18 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 			
 			logOverviewController = (LogOverviewController) template;
 			
-			rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, new javafx.event.EventHandler<KeyEvent>()
+			scene.setOnKeyPressed(e -> 
 			{
-
-				@Override
-				public void handle(KeyEvent keyEvent) 
+				if((e.isShortcutDown() && e.isShiftDown() && e.getCode() == KeyCode.S) || (e.isShortcutDown() && e.getCode() == KeyCode.S))
 				{
-					if((keyEvent.getCode() == KeyCode.S && keyEvent.isControlDown()) || (keyEvent.getCode() == KeyCode.S && keyEvent.isShiftDown() && keyEvent.isControlDown()))
-					{
-						logOverviewController.handleSave();
-					}
+					logOverviewController.handleSave();
 				}
-				
+				else if(e.isShortcutDown() && e.getCode() == KeyCode.Q)
+				{
+					logOverviewController.handleExit();
+				}
 			});
+			
 			template.setMainApp(this);
 		}
 		catch(IOException e)
