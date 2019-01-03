@@ -16,6 +16,9 @@ import ch.makery.log.model.SaveAndOpenFileOption;
 import ch.makery.log.util.DateUtil;
 import ch.makery.log.util.ReadTextFileUtil;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
 public class RootLayoutController extends LogOverviewTemplate
@@ -76,10 +79,21 @@ public class RootLayoutController extends LogOverviewTemplate
 	private void setLOEToLinesOfEntry()
 	{
 		setLinesOfEntry(Arrays.asList("Name: " + getNameTF().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTF().getText(), "Entry:", getEntryTA().getText()));
+		System.out.println("\nNAMETF: " + getNameTF().getText() + "\nSUBJECTTF: " + getSubjectTF().getText() + "\nENTRYTA: " + getEntryTA().getText());
 		setLOE(getLinesOfEntry());
 		System.out.println("\ngetLOE(): " + getLOE());
 	}
 
+	public void setLogOverviewController(LogOverviewController logOverviewController)
+	{
+		this.logOverviewController = logOverviewController;
+	}
+	
+	public LogOverviewController getLogOverviewController()
+	{
+		return logOverviewController;
+	}
+	
 	@FXML
 	private void handleNew()
 	{
@@ -95,58 +109,6 @@ public class RootLayoutController extends LogOverviewTemplate
 		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
 		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
 		setLOEToLinesOfEntry();
-	}
-
-	@FXML
-	private void handleSave()
-	{
-//		dailyLogPathDirectoryOfTest = selectedDirectory.toString();
-//		((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfTest);
-//		setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
-		
-		System.out.println("savedFileState: " + getSavedFileState());
-//		System.out.println("showOpenDialog: " + savedFileState);
-		try 
-		{
-			getSourceFile().setBuffer(new byte[(int) getSavedFileState().length()]);
-			bytesArray = getSourceFile().getBuffer();
-
-			getSourceFile().setFunction(new FileInputStream(getSavedFileState()));
-			fileInputStream = (FileInputStream) getSourceFile().getFunction();
-			fileInputStream.read(bytesArray);
-			System.out.println("\n");
-			for(int i = 0; i < bytesArray.length; i++)
-			{
-				System.out.print((char)bytesArray[i]);
-			}
-			setEachTextBoxWithContent(bytesArray);
-			System.out.println("\n" + bytesArray.length + " byte(s) of data\n");
-			fileInputStream.close();
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		catch (Exception e)
-		{
-			System.err.close();
-		}
-		
-		setLOEToLinesOfEntry();
-		
-		logOverviewController = new LogOverviewController();
-		
-		logOverviewController.saveAs(getLOE(), file);
-	}
-	
-	@FXML
-	private void handleSaveAs()
-	{
-		handleSave();
 	}
 	
 	@FXML
