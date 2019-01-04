@@ -143,6 +143,11 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 	{
 		return primaryStage;
 	}
+	
+	public LogOverviewTemplate getLogOverviewController()
+	{
+		return logOverviewController;
+	}
 
 	public static void main(String[] args) 
 	{

@@ -20,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
 public class RootLayoutController extends LogOverviewTemplate
@@ -27,7 +29,10 @@ public class RootLayoutController extends LogOverviewTemplate
 	private File showOpenDialog;
 	private FileInputStream fileInputStream;
 	private byte[] bytesArray;
-	private LogOverviewController logOverviewController;
+	private TextField name = getMainApp().getLogOverviewController().getNameTextField();
+	private TextField subject = getMainApp().getLogOverviewController().getSubjectTextField();
+	private TextArea entry = getMainApp().getLogOverviewController().getEntryTextArea();
+//	private LogOverviewController logOverviewController;
 
 	public RootLayoutController()
 	{
@@ -85,25 +90,34 @@ public class RootLayoutController extends LogOverviewTemplate
 //		System.out.println("\ngetLOE(): " + getLOE());
 //	}
 
-	public void setLogOverviewController(LogOverviewController logOverviewController)
-	{
-		this.logOverviewController = logOverviewController;
-	}
-	
-	public LogOverviewController getLogOverviewController()
-	{
-		return logOverviewController;
-	}
+//	public void setLogOverviewController(LogOverviewController logOverviewController)
+//	{
+//		this.logOverviewController = logOverviewController;
+//	}
+//	
+//	public LogOverviewController getLogOverviewController()
+//	{
+//		return logOverviewController;
+//	}
 	
 	@FXML
 	private void handleNew()
 	{
-		getNameTF().clear();
-		getSubjectTF().clear();
-		getEntryTA().clear();
+		name.clear();
+		subject.clear();
+		entry.clear();
+//		getNameTF().clear();
+//		getSubjectTF().clear();
+//		getEntryTA().clear();
 		
 		chooseFileToSaveOrOpen(null, null);
 		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
 //		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
+	}
+	
+	@FXML
+	private void handleExit()
+	{
+		
 	}
 }
