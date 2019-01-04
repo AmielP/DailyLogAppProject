@@ -29,9 +29,9 @@ public class RootLayoutController extends LogOverviewTemplate
 	private File showOpenDialog;
 	private FileInputStream fileInputStream;
 	private byte[] bytesArray;
-	private TextField name = getMainApp().getLogOverviewController().getNameTextField();
-	private TextField subject = getMainApp().getLogOverviewController().getSubjectTextField();
-	private TextArea entry = getMainApp().getLogOverviewController().getEntryTextArea();
+	private TextField name;
+	private TextField subject;
+	private TextArea entry;
 //	private LogOverviewController logOverviewController;
 
 	public RootLayoutController()
@@ -103,21 +103,23 @@ public class RootLayoutController extends LogOverviewTemplate
 	@FXML
 	private void handleNew()
 	{
+		name = getMainApp().getLogOverviewController().getNameTextField();
+		subject = getMainApp().getLogOverviewController().getSubjectTextField();
+		entry = getMainApp().getLogOverviewController().getEntryTextArea();
 		name.clear();
 		subject.clear();
 		entry.clear();
 //		getNameTF().clear();
 //		getSubjectTF().clear();
-//		getEntryTA().clear();
-		
-		chooseFileToSaveOrOpen(null, null);
-		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
+//		getEntryTA().clear()
+//		chooseFileToSaveOrOpen(null, null);
+//		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
 //		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
 	}
 	
 	@FXML
 	private void handleExit()
 	{
-		
+		Platform.exit();
 	}
 }

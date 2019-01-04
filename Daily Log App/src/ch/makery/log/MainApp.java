@@ -33,8 +33,8 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private Scene scene;
-	LogOverviewController logOverviewController;
+//	private Scene scene;
+	private LogOverviewController logOverviewController;
 //	private SaveAndOpenFileOption saveFile;
 //	private SavingUserPreferences savingUserPreferences;
 	//	private Label dateLabel = new Label("message1");
@@ -77,14 +77,15 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane)loader.load();
 
-			scene = new Scene(rootLayout);
+			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
-			primaryStage.show();
+		
 			primaryStage.setMinWidth(400);
 			primaryStage.setMinHeight(280);
 			
 			RootLayoutController rootLayoutController = loader.getController();
 			rootLayoutController.setMainApp(this);
+			primaryStage.show();
 		}
 		catch(IOException e)
 		{
@@ -113,17 +114,18 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 			
 			logOverviewController = (LogOverviewController) template;
 			
-			scene.setOnKeyPressed(e -> 
-			{
-				if((e.isShortcutDown() && e.isShiftDown() && e.getCode() == KeyCode.S) || (e.isShortcutDown() && e.getCode() == KeyCode.S))
-				{
-					logOverviewController.handleSave();
-				}
-				else if(e.isShortcutDown() && e.getCode() == KeyCode.Q)
-				{
-					logOverviewController.handleExit();
-				}
-			});
+			//Delete this later when I finish FXML eventHandler methods in RootLayoutController()
+//			scene.setOnKeyPressed(e -> 
+//			{
+//				if((e.isShortcutDown() && e.isShiftDown() && e.getCode() == KeyCode.S) || (e.isShortcutDown() && e.getCode() == KeyCode.S))
+//				{
+//					logOverviewController.handleSave();
+//				}
+//				else if(e.isShortcutDown() && e.getCode() == KeyCode.Q)
+//				{
+//					logOverviewController.handleExit();
+//				}
+//			});
 			
 			template.setMainApp(this);
 		}
