@@ -125,6 +125,12 @@ public class RootLayoutController extends LogOverviewTemplate
 	}
 	
 	@FXML
+	private void handleSave()
+	{
+		handleSaveAs();
+	}
+	
+	@FXML
 	private void handleSaveAs()
 	{
 		//Initialize variable to specific text fields and area for convenient naming conventions
