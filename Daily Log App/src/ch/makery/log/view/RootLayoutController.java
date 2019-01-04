@@ -103,6 +103,7 @@ public class RootLayoutController extends LogOverviewTemplate
 	@FXML
 	private void handleNew()
 	{
+		//Initialize variable to specific text fields and area for convenient naming conventions
 		name = getMainApp().getLogOverviewController().getNameTextField();
 		subject = getMainApp().getLogOverviewController().getSubjectTextField();
 		entry = getMainApp().getLogOverviewController().getEntryTextArea();
@@ -115,6 +116,18 @@ public class RootLayoutController extends LogOverviewTemplate
 //		chooseFileToSaveOrOpen(null, null);
 //		getL().setLog(getNameTF().getText(), DateUtil.getZonedDateTime(), getSubjectTF().getText(), getEntryTA().getText());
 //		setFilePathOfInitialChosenDirectory(showOpenDialog.getParentFile());
+	}
+	
+	@FXML
+	private void handleSaveAs()
+	{
+		//Initialize variable to specific text fields and area for convenient naming conventions
+		name = getMainApp().getLogOverviewController().getNameTextField();
+		subject = getMainApp().getLogOverviewController().getSubjectTextField();
+		entry = getMainApp().getLogOverviewController().getEntryTextArea();
+		
+		getMainApp().getLogOverviewController().setLinesOfEntry(Arrays.asList("Name: " + name.getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + subject.getText(), "Entry:", entry.getText()));
+		getMainApp().getLogOverviewController().saveAs(getMainApp().getLogOverviewController().getLinesOfEntry());
 	}
 	
 	@FXML

@@ -110,9 +110,9 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 
 			rootLayout.setCenter(logOverview);
 
-			LogOverviewTemplate template = loader.getController();
+			LogOverviewController template = loader.getController();
 			
-			logOverviewController = (LogOverviewController) template;
+			logOverviewController = template;
 			
 			//Delete this later when I finish FXML eventHandler methods in RootLayoutController()
 //			scene.setOnKeyPressed(e -> 
@@ -146,7 +146,7 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 		return primaryStage;
 	}
 	
-	public LogOverviewTemplate getLogOverviewController()
+	public LogOverviewController getLogOverviewController()
 	{
 		return logOverviewController;
 	}

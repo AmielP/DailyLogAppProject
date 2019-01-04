@@ -126,6 +126,7 @@ public class LogOverviewController extends LogOverviewTemplate
 		{
 			System.out.println("Amiel's stuff");
 			dailyLogFileOfAmiel = mostRecentTextFile.targetFileOrFolderName(dailyLogPathDirectoryOfAmiel);
+			file = new File(dailyLogFileOfAmiel);
 			((ReadTextFileUtil) readTextFileUtil).readTextFile(dailyLogFileOfAmiel);
 			setEachTextBoxWithContent(readTextFileUtil.getLogOverviewContent());
 		}
@@ -183,6 +184,7 @@ public class LogOverviewController extends LogOverviewTemplate
 			{
 				System.err.println(e);
 				System.out.println(e);
+				System.out.print("YOU HAVE ERRED");
 				return;
 			}
 
@@ -202,10 +204,10 @@ public class LogOverviewController extends LogOverviewTemplate
 		}
 	}
 
-//	public void saveAs(List<Object> objectList, File file)
-//	{
-//		chooseFileToSaveOrOpen(objectList, file);
-//	}
+	public void saveAs(List<Object> objectList)
+	{
+		chooseFileToSaveOrOpen(objectList, file);
+	}
 
 	//Empty initialization of the fields since user will custom enter data
 	//with exception of the name field for the sake of default brevity
