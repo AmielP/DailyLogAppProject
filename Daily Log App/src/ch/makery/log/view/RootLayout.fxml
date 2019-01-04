@@ -16,6 +16,11 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                      </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator>
+                  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save As...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
