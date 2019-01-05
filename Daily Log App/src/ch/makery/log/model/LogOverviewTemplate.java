@@ -9,6 +9,7 @@ import ch.makery.log.services.IFindExtension;
 import ch.makery.log.services.ILogTemplate;
 import ch.makery.log.services.IMatchContent;
 import ch.makery.log.util.MatchLogContent;
+import ch.makery.log.util.SavingUserPreferences;
 import ch.makery.log.view.RootLayoutController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -25,6 +26,7 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	private PrimaryStage primStage;
 	private FileInputStream logOverviewStream;
 	private SaveAndOpenFileOption saveAndOpenFileOption;
+	private SavingUserPreferences savingUserPreferences;
 	private byte[] logOverviewContent;
 	private MainApp mainApp;
 	
@@ -264,6 +266,16 @@ public abstract class LogOverviewTemplate implements IFindExtension
 	public List<Object> getLinesOfEntry()
 	{
 		return linesOfEntry;
+	}
+	
+	public void setSavingUserPreferences(SavingUserPreferences savingUserPreferences)
+	{
+		this.savingUserPreferences = savingUserPreferences;
+	}
+	
+	public SavingUserPreferences getSavingUserPreferences()
+	{
+		return savingUserPreferences;
 	}
 	
 	public static void setSavedFileState(File savedFileState)

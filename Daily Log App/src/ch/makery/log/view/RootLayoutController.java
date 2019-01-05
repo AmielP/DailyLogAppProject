@@ -15,6 +15,7 @@ import ch.makery.log.view.LogOverviewController;
 import ch.makery.log.model.SaveAndOpenFileOption;
 import ch.makery.log.util.DateUtil;
 import ch.makery.log.util.ReadTextFileUtil;
+import ch.makery.log.util.SavingUserPreferences;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,6 +104,7 @@ public class RootLayoutController extends LogOverviewTemplate
 	@FXML
 	private void handleNew()
 	{
+		setSavingUserPreferences(new SavingUserPreferences());
 		//Initialize variable to specific text fields and area for convenient naming conventions
 		name = getMainApp().getLogOverviewController().getNameTextField();
 		subject = getMainApp().getLogOverviewController().getSubjectTextField();
@@ -110,6 +112,8 @@ public class RootLayoutController extends LogOverviewTemplate
 		name.clear();
 		subject.clear();
 		entry.clear();
+		getMainApp().getLogData().clear();
+		getMainApp().setLogFilePath(null);
 //		getNameTF().clear();
 //		getSubjectTF().clear();
 //		getEntryTA().clear()
@@ -127,7 +131,16 @@ public class RootLayoutController extends LogOverviewTemplate
 	@FXML
 	private void handleSave()
 	{
-		handleSaveAs();
+//		handleSaveAs();
+		File logFile = getMainApp().getLogFilePath();
+		if(logFile != null)
+		{
+			getMainApp().saveLogDataToFile(logFile);
+		}
+		else
+		{
+			handleSaveAs();
+		}
 	}
 	
 	@FXML

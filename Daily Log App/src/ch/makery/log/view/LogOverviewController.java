@@ -238,7 +238,12 @@ public class LogOverviewController extends LogOverviewTemplate
 		setLinesOfEntry(Arrays.asList("Name: " + getNameTextField().getText(), "Date: " + DateUtil.format(DateUtil.getZonedDateTime(), DateUtil.getDateFormatterVerbose()), "Subject: " + getSubjectTextField().getText(), "Entry:", getEntryTextArea().getText()));
 		setLOE(getLinesOfEntry());
 		System.out.println("\ngetLOE() in initialize: " + getLOE());
-		//		System.out.println("\nName: " + log.getName() + "\nDate: " + DateUtil.format(log.getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + log.getSubject() + "\nEntry: " + log.getEntry());
+		getLog().setName(getNameTextField().getText());
+		getLog().setDate(DateUtil.getZonedDateTime());
+		getLog().setSubject(getSubjectTextField().getText());
+		getLog().setEntry(getEntryTextArea().getText());
+//		getLog().setLog(getNameTextField().getText(), getLog().getDate(), getSubjectTextField().getText(), getEntryTextArea().getText());
+//		System.out.println("\nName: " + getLog().getName() + "\nDate: " + DateUtil.format(getLog().getDate(), DateUtil.getDateFormatterVerbose()) + "\nSubject: " + getLog().getSubject() + "\nEntry: " + getLog().getEntry());
 		//		System.out.println("Before the storm");
 
 	}

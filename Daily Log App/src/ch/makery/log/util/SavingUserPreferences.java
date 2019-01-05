@@ -17,6 +17,7 @@ public class SavingUserPreferences extends LogOverviewTemplate
 	
 	public void setLogFilePath(File file) 
 	{	
+		setMainApp(new MainApp());
 		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
 		if(file != null)
 		{
@@ -28,14 +29,17 @@ public class SavingUserPreferences extends LogOverviewTemplate
 		{
 			getDestinationFile().getPreferences().remove("filePath");
 			
-			getPrimStage().getPrimaryStage().setTitle("DailyLogApp");
+			getMainApp().getPrimaryStage().setTitle("DailyLogApp");
 		}
 	}
 
 	public File getLogFilePath() 
 	{
-		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
-		String filePath = getDestinationFile().getPreferences().get("filePath", null);
+//		setDestinationFile(new OutputFile());
+//		getDestinationFile().setPreferences(Preferences.userNodeForPackage(MainApp.class));
+//		String filePath = getDestinationFile().getPreferences().get("filePath", null);
+		Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+		String filePath = prefs.get("filePath", null);
 		if(filePath != null)
 		{
 			getSourceFile().setFile(new File(filePath));

@@ -2,6 +2,7 @@ package ch.makery.log;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -35,8 +36,8 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 	private BorderPane rootLayout;
 //	private Scene scene;
 	private LogOverviewController logOverviewController;
-//	private SaveAndOpenFileOption saveFile;
-//	private SavingUserPreferences savingUserPreferences;
+	private SaveAndOpenFileOption saveFile;
+	private SavingUserPreferences savingUserPreferences;
 	//	private Label dateLabel = new Label("message1");
 	private ObservableList<Log> logData = FXCollections.observableArrayList();
 
@@ -68,8 +69,8 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 	//Initialize the root layout
 	public void initRootLayout()
 	{
-//		saveFile = new SaveAndOpenFileOption();
-//		savingUserPreferences = new SavingUserPreferences();
+		saveFile = new SaveAndOpenFileOption();
+		savingUserPreferences = new SavingUserPreferences();
 		
 		try
 		{
@@ -92,11 +93,11 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 			e.printStackTrace();
 		}
 		
-//		saveFile.setFile(savingUserPreferences.getLogFilePath());
-//		if(saveFile.getFile() != null)
-//		{
-//			loadLogDataFromFile(saveFile.getFile());
-//		}
+		saveFile.setFile(getLogFilePath());
+		if(saveFile.getFile() != null)
+		{
+			loadLogDataFromFile(saveFile.getFile());
+		}
 	}
 
 	//Shows the log overview inside the root layout
@@ -154,5 +155,112 @@ public class MainApp extends Application //ALL COMMENTED BLOCKS OF CODE REGARDIN
 	public static void main(String[] args) 
 	{
 		launch(args);
+	}
+	
+	public void loadLogDataFromFile(File file)
+	{
+		try
+		{
+			JAXBContext context = JAXBContext
+	                .newInstance(LogListWrapper.class);
+	        Unmarshaller um = context.createUnmarshaller();
+
+	        // Reading XML from the file and unmarshalling.
+	        LogListWrapper wrapper = (LogListWrapper) um.unmarshal(file);
+
+	        logData.clear();
+	        logData.addAll(wrapper.getLogs());
+
+	        // Save the file path to the registry.
+	        setLogFilePath(file);
+
+	    } 
+		catch (Exception e) 
+		{ 
+			// catches ANY exception
+	        Alert alert = new Alert(AlertType.ERROR);
+	        alert.setTitle("Error");
+	        alert.setHeaderText("Could not load data");
+	        alert.setContentText("Could not load data from file:\n" + file.getPath());
+
+	        alert.showAndWait();
+	    }
+	}
+	
+	public void saveLogDataToFile(File file) 
+	{
+	    try 
+	    {
+	        JAXBContext context = JAXBContext
+	                .newInstance(LogListWrapper.class);
+	        Marshaller m = context.createMarshaller();
+	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+	        // Wrapping our person data.
+	        LogListWrapper wrapper = new LogListWrapper();
+	        wrapper.setLogs(logData);
+
+	        // Marshalling and saving XML to the file.
+	        m.marshal(wrapper, file);
+
+	        // Save the file path to the registry.
+	        setLogFilePath(file);
+	    } 
+	    catch (Exception e) 
+	    { 
+	    	// catches ANY exception
+	        Alert alert = new Alert(AlertType.ERROR);
+	        alert.setTitle("Error");
+	        alert.setHeaderText("Could not save data");
+	        alert.setContentText("Could not save data to file:\n" + file.getPath());
+
+	        alert.showAndWait();
+	    }
+	}
+	
+	/**
+	 * Returns the person file preference, i.e. the file that was last opened.
+	 * The preference is read from the OS specific registry. If no such
+	 * preference can be found, null is returned.
+	 * 
+	 * @return
+	 */
+	public File getLogFilePath() 
+	{
+	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+	    String filePath = prefs.get("filePath", null);
+	    if (filePath != null) 
+	    {
+	        return new File(filePath);
+	    } 
+	    else 
+	    {
+	        return null;
+	    }
+	}
+
+	/**
+	 * Sets the file path of the currently loaded file. The path is persisted in
+	 * the OS specific registry.
+	 * 
+	 * @param file the file or null to remove the path
+	 */
+	public void setLogFilePath(File file) 
+	{
+	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+	    if (file != null) 
+	    {
+	        prefs.put("filePath", file.getPath());
+
+	        // Update the stage title.
+	        primaryStage.setTitle("Daily Log App - " + file.getName());
+	    } 
+	    else 
+	    {
+	        prefs.remove("filePath");
+
+	        // Update the stage title.
+	        primaryStage.setTitle("Daily Log App");
+	    }
 	}
 }
