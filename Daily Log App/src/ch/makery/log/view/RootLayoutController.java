@@ -18,11 +18,17 @@ import ch.makery.log.util.ReadTextFileUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class RootLayoutController extends LogOverviewTemplate
 {	
@@ -32,11 +38,13 @@ public class RootLayoutController extends LogOverviewTemplate
 	private TextField name;
 	private TextField subject;
 	private TextArea entry;
+//	private Stage aboutStage;
 //	private LogOverviewController logOverviewController;
 
 	public RootLayoutController()
 	{
 //		setLog(new Log());
+//		aboutStage = new Stage();
 	}
 
 	@Override
@@ -146,5 +154,31 @@ public class RootLayoutController extends LogOverviewTemplate
 	private void handleExit()
 	{
 		Platform.exit();
+	}
+	
+	@FXML
+	private void handleAbout()
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("AboutAlert.fxml"));
+		Scene newScene;
+		Stage aboutStage = new Stage();
+		try
+		{
+			newScene = new Scene(loader.load());
+		}
+		catch(IOException e)
+		{
+			System.err.println(e);
+			System.out.println(e);
+			System.out.print("YOU HAVE ERRED");
+			return;
+		} 
+		aboutStage.setScene(newScene);
+		aboutStage.setTitle("About Us");
+		aboutStage.initStyle(StageStyle.UTILITY);
+		aboutStage.setResizable(false);
+		aboutStage.setMinWidth(220);
+		aboutStage.setMinHeight(250);
+		aboutStage.show();
 	}
 }
