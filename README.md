@@ -25,11 +25,14 @@ Update vAlpha 1.2.4:
   
 Update vAlpha 1.2.5:
 - Bug fixes
-- Menu option "New" is fully operational
-- Shortcut keys for "Send" and "Cancel" have been created 
+- Menu option "New" is fully operational.
+- Shortcut keys for "Send" and "Cancel" have been created.
 
 Update vAlpha 1.5.0:
-- All menu options are now fully operational with the addition of shortcut keys
+- All menu options are now fully operational with the addition of shortcut keys.
+
+Update vAlpha 1.5.1:
+- Added features to the "About" menu item under the "Help" menu option.
   
 When hitting the "Send" button, you are always prompted to choose a directory in which to save the file.
 To continue opening the previous the log, be sure to only save the file in the same directory it was created.
@@ -46,7 +49,7 @@ If you intend to open files beyond "Entry_DATE.txt" files, the program may not u
 ~~You need at least 2 storage drives to make this work.~~
 ~~Select any hard drive except C:, because access to the C: drive is denied.~~
 
-To run, type java -jar daily_log_app_vALPHA_X.jar in your command prompt or terminal and *not* by double-clicking the app (X means version).
+~~To run, type java -jar daily_log_app_vALPHA_X.jar in your command prompt or terminal and *not* by double-clicking the app (X means~~ ~~version).~~
 
 
 Enjoy!
