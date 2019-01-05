@@ -27,14 +27,13 @@ Update vAlpha 1.2.5:
 - Bug fixes
 - Menu option "New" is fully operational
 - Shortcut keys for "Send" and "Cancel" have been created 
+
+Update vAlpha 1.5.0:
+- All menu options are now fully operational with the addition of shortcut keys
   
 When hitting the "Send" button, you are always prompted to choose a directory in which to save the file.
 To continue opening the previous the log, be sure to only save the file in the same directory it was created.
 To create a new daily log chain, just save the log file in a different directory.
-
-For Shortcut Keys:
-- Ctrl + S || Ctrl + Shift + S = "Send"
-- Ctrl + Q = "Cancel"
 
 DO NOT CHANGE THE NAME OF THE FILE WHEN SAVING!
 
