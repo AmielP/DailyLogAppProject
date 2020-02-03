@@ -44,6 +44,8 @@ DO NOT DUPLICATE THE FILE WITH THE SAME NAME AS THE OTHER LOG FILES!
 
 DISCLAIMER: 
 
+When changing your java runtime environment, check to make sure in "regedit" that the appropriate jre bin folder is selected in "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\jarfile\shell\open\command" and "Computer\HKEY_CLASSES_ROOT\jarfile\shell\open\command" for "C:\Program Files\Java\jre1.8.0_231\bin\javaw.exe" -jar "%1" %*
+
 If you intend to open files beyond "Entry_DATE.txt" files, the program may not use the content.
 
 ~~You need at least 2 storage drives to make this work.~~
